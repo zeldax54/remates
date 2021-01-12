@@ -1,0 +1,17 @@
+index_admin:
+    path: /admin
+    controller: App\Controller\DefaultController::index
+
+index_remates:
+    path: /catalogo
+    controller: App\Controller\CatalogoController::index
+
+profile:
+    path: /catalogo
+    controller: App\Controller\CatalogoController::index
+
+generictable:
+    path: /generictable
+    controller: App\Controller\GenericController::getData
+    options:
+        expose: true
