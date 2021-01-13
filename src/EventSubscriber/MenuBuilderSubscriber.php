@@ -22,7 +22,7 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
         $blog->addChild(
             new MenuItemModel('caracteristicasId', 'Categorias', 'categoria_index', [], 'fa fa-circle-o text-blue')
         )->addChild(
-            new MenuItemModel('razasId', 'Razas', 'index_admin', [], 'fa fa-circle-o text-blue')
+            new MenuItemModel('razasId', 'Razas', 'razas_index', [], 'fa fa-circle-o text-blue')
         );
         
         $event->addItem($blog);

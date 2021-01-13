@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class GenericController extends AbstractController
 {
     /**
-     * @Route("/generictable", name="generictable")
+     * @Route("/admin/generictable", name="generictable")
      */
     public function getData(Request $request): Response
     {

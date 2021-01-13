@@ -1,0 +1,13 @@
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
+
+{% block page_title %} Razas {% endblock %}
+{% block page_subtitle %}  Nueva {% endblock %}
+
+{% block page_content_before %}
+  <div class="marker">
+
+    {{ include('razas/_form.html.twig') }}
+
+    <a class="backlist"  href="{{ path('razas_index') }}">back to list</a>
+    </div>
+{% endblock %}
