@@ -18,6 +18,14 @@
             {
                 return "<a href= '" + Routing.generate(entityName.toLowerCase()+'_edit', {id: row.id}) + "'><button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-edit\"></span></button></a> " + 
                        "<a href= '" + Routing.generate(entityName.toLowerCase()+'_delete', {id: row.id}) + "'> <button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash\"></span></button></a>";
+            }, 
+            "fechainicio": function(column, row)
+            {
+                return "" + row.fechainicio.date.substring(0, 20);
+            }, 
+            "fechacierre": function(column, row)
+            {
+                return "" + row.fechacierre.date.substring(0, 20);
             }
         }
        }).on("loaded.rs.jquery.bootgrid", function()

@@ -1,10 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
 
-{% block title %}Razas{% endblock %}
+{% block page_title %} Raza {% endblock %}
+{% block page_subtitle %}  Eliminar {% endblock %}
 
-{% block body %}
-    <h1>Razas</h1>
-
+{% block page_content_before %}
+  
+  <div class="marker">
     <table class="table">
         <tbody>
             <tr>
@@ -23,4 +24,5 @@
     <a href="{{ path('razas_edit', {'id': raza.id}) }}">edit</a>
 
     {{ include('razas/_delete_form.html.twig') }}
+  </div>
 {% endblock %}

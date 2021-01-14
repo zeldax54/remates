@@ -2,6 +2,6 @@
 <form method="post" action="{{ path('categoria_delete', {'id': categorium.id}) }}" onsubmit="{{ deletemsg }}">
     <input type="hidden" name="_method" value="DELETE"> 
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categorium.id) }}">
-    <button class="btn btn-danger">Delete</button>
+    <button class="btn btn-danger">Eliminar</button>
 </form>
 </div>

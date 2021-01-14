@@ -1,0 +1,60 @@
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
+
+{% block page_title %} Lote {% endblock %}
+{% block page_subtitle %}  Eliminar {% endblock %}
+
+{% block page_content_before %}
+  
+  <div class="marker">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ lote.id }}</td>
+            </tr>
+            <tr>
+                <th>Galleria</th>
+                
+              
+                 {% for  g in lote.gallery %}
+                  <td>              
+                  
+                     {% if  'cropped' in g %}
+                    <img src="{{ asset( 'uploads/Lote/gallery/' ~ g|split('/')[0] ~'/thumbnails/150x150-' ~ g|split('/')[1] ) }}"/>
+                    {% else %}
+                     <img src="{{ asset( 'uploads/Lote/gallery/thumbnails/' ~ g ) }}"/>
+                    {% endif %}
+                   </td>
+                 {% endfor %}
+              
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ lote.nombre }}</td>
+            </tr>
+            <tr>
+                <th>PreOferta</th>
+                <td>{{ lote.info }}</td>
+            </tr>
+            <tr>
+                <th>Condicionventa</th>
+                <td>{{ lote.condicionventa }}</td>
+            </tr>
+            <tr>
+                <th>Fechainicio</th>
+                <td>{{ lote.fechainicio ? lote.fechainicio|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fechacierre</th>
+                <td>{{ lote.fechacierre ? lote.fechacierre|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('lote_index') }}">back to list</a>
+
+    <a href="{{ path('lote_edit', {'id': lote.id}) }}">edit</a>
+
+    {{ include('lote/_delete_form.html.twig') }}
+        </div>
+{% endblock %}

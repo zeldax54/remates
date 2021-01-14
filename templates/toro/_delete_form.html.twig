@@ -1,0 +1,7 @@
+<div class="marker">
+<form method="post" action="{{ path('toro_delete', {'id': toro.id}) }}"  onsubmit="{{ deletemsg }}">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ toro.id) }}">
+    <button class="btn btn-danger">Eliminar</button>
+</form>
+</div>

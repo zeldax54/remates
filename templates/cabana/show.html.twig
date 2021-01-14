@@ -1,0 +1,62 @@
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
+
+{% block page_title %} Cabaña {% endblock %}
+{% block page_subtitle %}  Eliminar {% endblock %}
+
+{% block page_content_before %}
+  <div class="marker">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ cabana.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ cabana.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ cabana.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Logos</th>
+                <td>{{ cabana.logos ? cabana.logos|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Gallery</th>
+                <td>{{ cabana.gallery ? cabana.gallery|join(', ') : '' }}</td>
+            </tr>
+             <tr>
+                <th>Videos</th>
+                <td>{{ cabana.videos ? cabana.videos|join(', ') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+  <div class="owl-carousel owl-theme">
+ 
+    <div> Your Content </div>
+  <div class="item-video"> <a class="owl-video" href="https://www.youtube.com/watch?v=_DwmKtbVFJ4"></a></div>
+  <div> Your Content </div>
+  <div> Your Content </div>
+  <div> Your Content </div>
+  <div> Your Content </div>
+  <div> Your Content </div>
+  </div>
+
+   
+
+    <a href="{{ path('cabana_index') }}">back to list</a>
+
+    <a href="{{ path('cabana_edit', {'id': cabana.id}) }}">edit</a>
+
+    {{ include('cabana/_delete_form.html.twig') }}
+      </div>
+{% endblock %}
+
+{% block customjavascripts %}
+   <script>
+    
+   </script>
+{% endblock %}

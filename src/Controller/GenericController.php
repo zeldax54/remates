@@ -19,6 +19,7 @@ class GenericController extends AbstractController
      */
     public function getData(Request $request): Response
     {
+        date_default_timezone_set("America/Argentina/Buenos_Aires");
         $entityName = $request->request->get('entityName');
         $columnsName = $request->request->get('columnsName');
         $current = $request->request->get('current');

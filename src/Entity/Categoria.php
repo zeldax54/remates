@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,6 +30,16 @@ class Categoria
      */
     private $nombre;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Lote" , mappedBy="categoria", cascade={"persist"})
+     */
+     private $lotes;
+
+     public function __construct()
+     {
+         $this->lotes = new ArrayCollection();
+     }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -43,6 +55,40 @@ class Categoria
         $this->nombre = $nombre;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Lote[]
+     */
+    public function getLotes(): Collection
+    {
+        return $this->lotes;
+    }
+
+    public function addLote(Lote $lote): self
+    {
+        if (!$this->lotes->contains($lote)) {
+            $this->lotes[] = $lote;
+            $lote->setCategoria($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLote(Lote $lote): self
+    {
+        if ($this->lotes->removeElement($lote)) {
+            // set the owning side to null (unless already changed)
+            if ($lote->getCategoria() === $this) {
+                $lote->setCategoria(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(){
+        return $this->nombre;
     }
 
 

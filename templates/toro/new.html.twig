@@ -1,0 +1,16 @@
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
+
+
+{% block page_title %} Toro {% endblock %}
+{% block page_subtitle %}  Nuevo {% endblock %}
+
+{% block page_content_before %}
+  <div class="marker">
+    {{ include('toro/_form.html.twig') }}
+
+    <a class="backlist" href="{{ path('toro_index') }}">back to list</a>
+    </div>
+{% endblock %}
+{% block customjavascripts %}
+{% include "ComurImageBundle:Form:croppable_image_modal.html.twig" with {'include_fontawesome': false, 'include_jquery': false, 'include_bootstrap': false, 'bootstrap_version': 4} %}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
+
+
+{% block page_title %} Lote {% endblock %}
+{% block page_subtitle %}  Editar {% endblock %}
+
+{% block page_content_before %}
+
+    {{ include('lote/_form.html.twig', {'button_label': 'Actualizar'}) }}
+
+    <a class="backlist" href="{{ path('lote_index') }}">back to list</a>
+
+    {{ include('lote/_delete_form.html.twig') }}
+{% endblock %}
+{% block customjavascripts %}
+{% include "ComurImageBundle:Form:croppable_image_modal.html.twig" with {'include_fontawesome': false, 'include_jquery': false, 'include_bootstrap': false, 'bootstrap_version': 4} %}
+{% endblock %}

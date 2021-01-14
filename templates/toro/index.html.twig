@@ -1,0 +1,31 @@
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
+
+{% block title %}Toros index{% endblock %}
+
+{% block page_title %} Toros {% endblock %}
+{% block page_subtitle %}  index {% endblock %}
+
+{% block page_content_before %}
+ <div class="row">
+    <div class="col-md-6 col-xs-6 tablecontainer">
+    <table id="grid-data" class="table table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                
+                <th data-column-id="nombre">Nombre</th>
+                <th data-column-id="info">Info</th>
+                <th data-column-id="videos">Videos</th>
+                <th data-column-id="commands" data-formatter="commands" data-sortable="false">Acciones</th>
+            </tr>
+        </thead>        
+    </table>
+     </div>
+    <a href="{{ path('toro_new') }}">Create new</a>
+    </div>
+{% endblock %}
+
+ {% block customjavascripts %}
+    <script>
+    InitializaGrid('grid-data','Toro',["nombre"]);
+    </script>
+ {% endblock %}

@@ -16,4 +16,6 @@ return [
     KevinPapst\AdminLTEBundle\AdminLTEBundle::class => ['all' => true],
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
+    JMS\TranslationBundle\JMSTranslationBundle::class => ['all' => true],
+    Comur\ImageBundle\ComurImageBundle::class => ['all' => true],
 ];
