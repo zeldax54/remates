@@ -1989,8 +1989,7 @@
 						'opacity': '1'
 					});
 					this._core.trigger('loaded', { element: $element, url: url }, 'lazy');
-				}, this);
-				console.log(url);
+				}, this);			
 				image.src = url;
 			}
 		}, this));

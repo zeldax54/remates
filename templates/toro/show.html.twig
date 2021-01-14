@@ -1,52 +1,53 @@
 {% extends '@AdminLTE/layout/default-layout.html.twig' %}
 
-{% block page_title %} Toro {% endblock %}
-{% block page_subtitle %}  Eliminar {% endblock %}
+{% block page_title %}
+	Toro
+{% endblock %}
+{% block page_subtitle %}
+	Eliminar
+{% endblock %}
 
 {% block page_content_before %}
-  
-  <div class="marker">
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ toro.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ toro.Nombre }}</td>
-            </tr>
-            <tr>
-                <th>Info</th>
-                <td>{{ toro.info }}</td>
-            </tr>
-            <tr>
-                <th>Videos</th>
-                <td>{{ toro.videos }}</td>
-            </tr>
-            <tr>
-                <th>Galleria</th>
-                
-              
-                 {% for  g in toro.gallery %}
-                  <td>              
-                  
-                     {% if  'cropped' in g %}
-                    <img src="{{ asset( 'uploads/Toro/gallery/' ~ g|split('/')[0] ~'/thumbnails/150x150-' ~ g|split('/')[1] ) }}"/>
-                    {% else %}
-                     <img src="{{ asset( 'uploads/Toro/gallery/thumbnails/' ~ g ) }}"/>
-                    {% endif %}
-                   </td>
-                 {% endfor %}
-              
-            </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('toro_index') }}">back to list</a>
+	<div class="marker">
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Id</th>
+					<td>{{ toro.id }}</td>
+				</tr>
+				<tr>
+					<th>Nombre</th>
+					<td>{{ toro.Nombre }}</td>
+				</tr>
+				<tr>
+					<th>Info</th>
+					<td>{{ toro.info }}</td>
+				</tr>
+				<tr>
+					<th>Videos</th>
+					<td>{{ toro.videos }}</td>
+				</tr>
+			</tbody>
+		</table>
 
-    <a href="{{ path('toro_edit', {'id': toro.id}) }}">edit</a>
+		
+		<div class="owl-carousel owl-theme">
+			{% for g in toro.gallery %}
+				<div class="item">
+					<img src="{{ asset('uploads/Toro/gallery/' ~ g ) }}" alt="{{toro.nombre}}" title="{{toro.nombre}}"/></div>
+			{% endfor %}
+			{% for v in toro.videos|split(';') %}
+				<div class="item">
+					<iframe width="720" height="400" src="https://www.youtube.com/embed/{{v}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				</div>
+			{% endfor %}
+		</div>
 
-    {{ include('toro/_delete_form.html.twig') }}
-    </div>
+		<a href="{{ path('toro_index') }}">back to list</a>
+
+		<a href="{{ path('toro_edit', {'id': toro.id}) }}">edit</a>
+
+		{{ include('toro/_delete_form.html.twig') }}
+	</div>
 {% endblock %}
