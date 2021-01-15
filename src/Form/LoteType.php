@@ -53,6 +53,7 @@ class LoteType extends AbstractType
             )
         ))
             ->add('nombre')
+            ->add('cabana')
             ->add('categoria')
             ->add('raza')
 

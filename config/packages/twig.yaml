@@ -6,3 +6,8 @@ twig:
     globals:
         deletemsg: return confirm('Eliminar item? Esta acción no se puede deshacer.');
 
+    form_themes:
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+
+    
+

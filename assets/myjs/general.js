@@ -4,6 +4,10 @@ $(document).ready(function()
     $('#lote_categoria').chosen();
     $('#lote_raza').chosen();
     $('#toro_lote').chosen();
+    $('#cabana_lotes').chosen();
+    $('#lote_cabana').chosen();
+    
+    
 
     $('.owl-carousel').owlCarousel({
         loop: true,

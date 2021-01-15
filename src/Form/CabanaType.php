@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Comur\ImageBundle\Form\Type\CroppableGalleryType;
 use Comur\ImageBundle\Form\Type\CollectionsType;
-
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class CabanaType extends AbstractType
 {
@@ -77,8 +77,16 @@ class CabanaType extends AbstractType
             )
         ))
             ->add('nombre')
-            ->add('descripcion')
+            ->add('descripcion',CKEditorType::class,[
+               'config'=>[
+                   'uiColor'=>'#00a65a',
+                    'toolBar'=>'full',
+                     'required'=>true
+               ] 
+            ])
             ->add('videos')
+            ->add('lotes',null, array(
+                'by_reference' => false))
           
         ;
     }

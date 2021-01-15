@@ -73,6 +73,11 @@ class Lote
      */ 
     private $raza;
 
+     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Cabana",inversedBy="lotes", cascade={"persist"})     
+     */ 
+    private $cabana;
+
 
     public function __construct()
     {
@@ -237,6 +242,18 @@ class Lote
     public function setRaza(?Razas $raza): self
     {
         $this->raza = $raza;
+
+        return $this;
+    }
+
+    public function getCabana(): ?Cabana
+    {
+        return $this->cabana;
+    }
+
+    public function setCabana(?Cabana $cabana): self
+    {
+        $this->cabana = $cabana;
 
         return $this;
     }

@@ -8,6 +8,8 @@
 *.env.local
 /var/
 /vendor/
+/public/bundles/
+/public/uploads/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###

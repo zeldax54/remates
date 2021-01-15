@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CabanaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,6 +45,18 @@ class Cabana
     * @ORM\Column(type="text", nullable=true)
     */
     protected $videos;
+
+        /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Lote" , mappedBy="cabana", cascade={"persist"})
+     */
+    private $lotes;
+
+    public function __construct()
+    {
+        $this->lotes = new ArrayCollection();
+    }
+
+
 
     public function getUploadDirLogo()
     {
@@ -135,5 +149,40 @@ class Cabana
         $this->videos = $videos;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Lote[]
+     */
+    public function getLotes(): Collection
+    {
+        return $this->lotes;
+    }
+
+    public function addLote(Lote $lote): self
+    {
+        if (!$this->lotes->contains($lote)) {
+            $this->lotes[] = $lote;
+            $lote->setCabana($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLote(Lote $lote): self
+    {
+        if ($this->lotes->removeElement($lote)) {
+            // set the owning side to null (unless already changed)
+            if ($lote->getCabana() === $this) {
+                $lote->setCabana(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getNombre();
     }
 }
