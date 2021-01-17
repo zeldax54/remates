@@ -1,151 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <title>{% block title %}Ganaderas del Sur{% endblock %}</title>
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <!--enable mobile device-->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-      <!--fontawesome css-->      
-       <link rel="stylesheet" href="{{ asset('../templates/frontpages/css/font-awesome.min.css') }}">
-      <!--bootstrap css-->
-      <link rel="stylesheet" href="{{ asset('../templates/frontpages/css/bootstrap.min.css')}}">
-      <!--animate css-->
-      <link rel="stylesheet" href="{{ asset('../templates/frontpages/css/animate-wow.css')}}">
-      <!--main css-->
-      <link rel="stylesheet" href="{{ asset('../templates/frontpages/css/style.css')}}">
-      <link rel="stylesheet" href="{{ asset('../templates/frontpages/css/bootstrap-select.min.css')}}">
-      <link rel="stylesheet" href="{{ asset('../templates/frontpages/css/slick.min.css')}}">
-      <!--responsive css-->
-      <link rel="stylesheet" href="{{ asset('../templates/frontpages/css/responsive.css')}}">
-    
-       {% block customstyles %} {% endblock %}
-   </head>
-   <body>
-      <header id="header" class="top-head">
-         <!-- Static navbar -->
-         <nav class="navbar navbar-default">
-            <div class="container-fluid">
-               <div class="row">
-                  <div class="col-md-4 col-sm-12 left-rs">
-                     <div class="navbar-header">
-                        <button type="button" id="top-menu" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"> 
-                        <span class="sr-only">Toggle navigation</span> 
-                        <span class="icon-bar"></span> 
-                        <span class="icon-bar"></span> 
-                        <span class="icon-bar"></span> 
-                        </button>
-                        <a href="index.html" class="navbar-brand"><img src="images/logo.png" alt="" /></a>
-                     </div>
-                     <form class="navbar-form navbar-left web-sh">
-                        <div class="form">
-                           <input type="text" class="form-control" placeholder="Search for products or companies">
-                        </div>
-                     </form>
-                  </div>
-                  <div class="col-md-8 col-sm-12">
-                     <div class="right-nav">                     
-                        <div class="help-r hidden-xs">
-                           <div class="help-box">
-                              <ul>
-                                 <li> <a data-toggle="modal" data-target="#myModal" href="#"> <span>Change</span> <img src="images/flag.png" alt="" /> </a> </li>
-                                 <li> <a href="#"><img class="h-i" src="images/help-icon.png" alt="" /> Help </a> </li>
-                              </ul>
-                           </div>
-                        </div>
-                        <div class="nav-b hidden-xs">
-                           <div class="nav-box">
-                              <ul>
-                                 <li><a href="howitworks.html">How it works</a></li>
-                                 <li><a href="about-us.html">Chamb for Business</a></li>
-                              </ul>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <!--/.container-fluid --> 
-         </nav>
-      </header>
-      <!-- Modal -->
-      <div class="modal fade lug" id="myModal" role="dialog">
-         <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-               <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Change</h4>
-               </div>
-               <div class="modal-body">
-                  <ul>
-                     <li><a href="#"><img src="images/flag-up-1.png" alt="" /> United States</a></li>
-                     <li><a href="#"><img src="images/flag-up-2.png" alt="" /> France </a></li>
-                  </ul>
-               </div>
-            </div>
-         </div>
-      </div>
-      <div id="sidebar" class="top-nav">
-         <ul id="sidebar-nav" class="sidebar-nav">
-            <li><a href="#">Help</a></li>
-            <li><a href="howitworks.html">How it works</a></li>
-            <li><a href="#">chamb for Business</a></li>
-         </ul>
-      </div>
-      {% block pagecontent %}
-      
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Ganaderas del Sur
+			{% endblock %}
+		</title>
+		<meta
+		http-equiv="X-UA-Compatible" content="IE=edge">
+		<!--enable mobile device-->
+		<meta
+		name="viewport" content="width=device-width, initial-scale=1">
 
-    {% endblock %}
-      <footer>
-       
-         <div class="copyright">
-            <div class="container">
-               <div class="row">
-                  <div class="col-md-8">
-                     <p><img width="90" src="{{ asset('../templates/frontpages/images/logo.png')}}" alt="#" style="margin-top: -5px;" /> Ganaderas del Sur © 2021</p>
-                  </div>
-                  <div class="col-md-4">
-                     <ul class="list-inline socials">
-                        <li>
-                           <a href="">
-                           <i class="fa fa-facebook" aria-hidden="true"></i>
-                           </a>
-                        </li>
-                        <li>
-                           <a href="">
-                           <i class="fa fa-twitter" aria-hidden="true"></i>
-                           </a>
-                        </li>
-                        <li>
-                           <a href="">
-                           <i class="fa fa-instagram" aria-hidden="true"></i>
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#">
-                           <i class="fa fa-linkedin" aria-hidden="true"></i>
-                           </a>
-                        </li>
-                     </ul>
-                     <ul class="right-flag">
-                        <li><a href="#"><img src="{{ asset('../templates/frontpages/images/flag.png')}}" alt="" /> <span>Argentina</span></a></li>
-                     </ul>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </footer>
-      <!--main js--> 
-      <script src="{{ asset('../templates/frontpages/js/jquery-1.12.4.min.js')}}"></script> 
-      <!--bootstrap js--> 
-      <script src="{{ asset('../templates/frontpages/js/bootstrap.min.js')}}"></script> 
-      <script src="{{ asset('../templates/frontpages/js/bootstrap-select.min.js')}}"></script>
-      <script src="{{ asset('../templates/frontpages/js/slick.min.js')}}"></script> 
-      <script src="{{ asset('../templates/frontpages/js/wow.min.js')}}"></script>
-      <!--custom js--> 
-      <script src="{{ asset('../templates/frontpages/js/custom.js')}}"></script>
-      {% block customjavascripts %} {% endblock %}
-   </body>
-</html>
+		<!--fontawesome css-->
+		<link
+		rel="stylesheet" href="{{ asset('../templates/frontpages/css/font-awesome.min.css') }}">
+		<!--bootstrap css-->
+		<link
+		rel="stylesheet" href="{{ asset('../templates/frontpages/css/bootstrap.min.css')}}">
+		<!--animate css-->
+		<link
+		rel="stylesheet" href="{{ asset('../templates/frontpages/css/animate-wow.css')}}">
+		<!--main css-->
+		<link rel="stylesheet" href="{{ asset('../templates/frontpages/css/style.css')}}">
+		<link rel="stylesheet" href="{{ asset('../templates/frontpages/css/bootstrap-select.min.css')}}">
+		<link rel="stylesheet" href="{{ asset('../templates/frontpages/css/slick.min.css')}}">
+		<link
+		rel="stylesheet" href="{{ asset('../templates/frontpages/css/select2.min.css')}}">
+
+		<!--responsive css-->
+		<link rel="stylesheet" href="{{ asset('../templates/frontpages/css/responsive.css')}}"> {% block customstyles %}{% endblock %}
+		</head>
+		<body>
+			<header
+				id="header" class="top-head">
+				<!-- Static navbar -->
+				<nav class="navbar navbar-default">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-4 col-sm-12 left-rs">
+								<div class="navbar-header">
+									<button type="button" id="top-menu" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+										<span class="sr-only">Toggle navigation</span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+									</button>
+									<a href="index.html" class="navbar-brand"><img src="{{ asset('../templates/frontpages/images/logo.png')}}" alt=""/></a>
+								</div>
+								<form class="navbar-form navbar-left web-sh">
+									{# <div class="form">
+										<input type="text" class="form-control" placeholder="Search for products or companies">
+									</div> #}
+								</form>
+							</div>
+							<div class="col-md-8 col-sm-12">
+								{# <div class="right-nav">
+									<div class="help-r hidden-xs">
+										<div class="help-box">
+											<ul>
+												<li><a data-toggle="modal" data-target="#myModal" href="#"><span>Change</span><img src="images/flag.png" alt=""/></a></li>
+												<li><a href="#"><img class="h-i" src="images/help-icon.png" alt=""/>Help</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="nav-b hidden-xs">
+										<div class="nav-box">
+											<ul>
+												<li><a href="howitworks.html">How it works</a></li>
+												<li><a href="about-us.html">Chamb for Business</a></li>
+											</ul>
+										</div>
+									</div>
+								</div> #}
+							</div>
+						</div>
+					</div>
+					<!--/.container-fluid -->
+				</nav>
+			</header>
+			<!-- Modal -->
+			<div class="modal fade lug" id="myModal" role="dialog">
+				<div
+					class="modal-dialog">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">Change</h4>
+						</div>
+						<div class="modal-body">
+							<ul>
+								{# <li><a href="#"><img src="images/flag-up-1.png" alt=""/>United States</a></li>
+								<li><a href="#"><img src="images/flag-up-2.png" alt=""/>France</a></li> #}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="sidebar" class="top-nav">
+				<ul id="sidebar-nav" class="sidebar-nav">
+					<li>
+						<a href="#">Help</a>
+					</li>
+					<li>
+						<a href="howitworks.html">How it works</a>
+					</li>
+					<li>
+						<a href="#">chamb for Business</a>
+					</li>
+				</ul>
+			</div>
+			{% block pagecontent %}{% endblock %}
+			<footer>
+
+				<div class="copyright">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-8">
+								<p><img width="90" src="{{ asset('../templates/frontpages/images/logo.png')}}" alt="#" style="margin-top: -5px;"/>
+									Ganaderas del Sur © 2021</p>
+							</div>
+							<div class="col-md-4">
+								<ul class="list-inline socials">
+									<li>
+										<a href="https://www.facebook.com/ganaderadelsur/">
+											<i class="fa fa-facebook" aria-hidden="true"></i>
+										</a>
+									</li>
+									<li>
+										<a href="https://twitter.com/GanaderadelSur">
+											<i class="fa fa-twitter" aria-hidden="true"></i>
+										</a>
+									</li>
+									<li>
+										<a href="https://www.instagram.com/ganaderadelsur/">
+											<i class="fa fa-instagram" aria-hidden="true"></i>
+										</a>
+									</li>
+									<li>
+										<a href="https://www.youtube.com/channel/UCrOdUZDhi6kKnp30KdZfBNw">
+											<i class="fa fa-youtube" aria-hidden="true"></i>
+										</a>
+									</li>
+								</ul>
+								<ul class="right-flag">
+									<li>
+										{# <a href="#"><img src="{{ asset('../templates/frontpages/images/flag.png')}}" alt=""/>
+											<span>Argentina</span>
+										</a> #}
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+			<!--main js-->
+			<script src="{{ asset('../templates/frontpages/js/jquery-1.12.4.min.js')}}"></script>
+			<!--bootstrap js-->
+			<script src="{{ asset('../templates/frontpages/js/bootstrap.min.js')}}"></script>
+			<script src="{{ asset('../templates/frontpages/js/bootstrap-select.min.js')}}"></script>
+			<script src="{{ asset('../templates/frontpages/js/slick.min.js')}}"></script>
+			<script src="{{ asset('../templates/frontpages/js/wow.min.js')}}"></script>
+			<script src="{{ asset('../templates/frontpages/js/select2.full.min.js')}}"></script>
+			<!--custom js-->
+			<script src="{{ asset('../templates/frontpages/js/custom.js')}}"></script>
+			<!--Routing js-->
+			<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+			<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+			{% block customjavascripts %}{% endblock %}
+		</body>
+	</html>

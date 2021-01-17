@@ -567,7 +567,7 @@ header .navbar-default .navbar-header {
 }
 
 .form-sh .bootstrap-select.btn-group .dropdown-menu {
-	background: #09294c;
+	background: #2b6028;
 	padding: 0px;
 }
 
@@ -600,7 +600,7 @@ header .navbar-default .navbar-header {
 }
 
 .box-img {
-	background: #051d36;
+	background: #2b6028;
 	text-align: center;
 	padding-bottom: 30px;
 	min-height: 280px;
@@ -614,7 +614,7 @@ header .navbar-default .navbar-header {
 	color: #fff;
 	padding-top: 35px;
 	padding-bottom: 30px;
-	font-size: 25px;
+	font-size: 14px;
 	font-weight: 500;
 	transition: all 0.3s ease 0s;
 	letter-spacing: 0px;

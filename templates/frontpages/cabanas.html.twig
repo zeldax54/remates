@@ -1,105 +1,67 @@
 {% extends 'frontpages/front_layout.html.twig' %}
 
- {% block pagecontent %}
-<div class="page-content-product">
-         <div class="main-product">
-            <div class="container">
-               <div class="row clearfix">
-                  <div class="find-box">
-                     <h1>Find your next product or<br>business partner here.</h1>
-                     <h4>It has never been easier.</h4>
-                     <div class="product-sh">
-                        <div class="col-sm-6">
-                           <div class="form-sh">
-                              <input type="text" placeholder="Search something you love" >
-                           </div>
-                        </div>
-                        <div class="col-sm-3">
-                           <div class="form-sh">
-                              <select class="selectpicker">
-                                 <option>Textiles</option>
-                                 <option>Furniture</option>
-                                 <option>Leather</option>
-                              </select>
-                           </div>
-                        </div>
-                        <div class="col-sm-3">
-                           <div class="form-sh"> <a class="btn" href="#">Search</a> </div>
-                        </div>
-                        
-                     </div>
-                  </div>
-               </div>
-               <div class="row clearfix">
-                  <div class="col-lg-3 col-sm-6 col-md-3">
-                     <a href="productpage.html">
-                        <div class="box-img">
-                           <h4>Product</h4>
-                           <img src="images/product/1.png" alt="" />
-                        </div>
-                     </a>
-                  </div>
-                  <div class="col-lg-3 col-sm-6 col-md-3">
-                     <a href="productpage.html">
-                        <div class="box-img">
-                           <h4>Product</h4>
-                           <img src="images/product/2.png" alt="" />
-                        </div>
-                     </a>
-                  </div>
-                  <div class="col-lg-3 col-sm-6 col-md-3">
-                     <a href="productpage.html">
-                        <div class="box-img">
-                           <h4>Product</h4>
-                           <img src="images/product/4.png" alt="" />
-                        </div>
-                     </a>
-                  </div>
-                  <div class="col-lg-3 col-sm-6 col-md-3">
-                     <a href="productpage.html">
-                        <div class="box-img">
-                           <h4>Product</h4>
-                           <img src="images/product/5.png" alt="" />
-                        </div>
-                     </a>
-                  </div>
-                  <div class="col-lg-3 col-sm-6 col-md-3">
-                     <a href="productpage.html">
-                        <div class="box-img">
-                           <h4>Product</h4>
-                           <img src="images/product/10.png" alt="" />
-                        </div>
-                     </a>
-                  </div>
-                  <div class="col-lg-3 col-sm-6 col-md-3">
-                     <a href="productpage.html">
-                        <div class="box-img">
-                           <h4>Product</h4>
-                           <img src="images/product/11.png" alt="" />
-                        </div>
-                     </a>
-                  </div>
-                  <div class="col-lg-3 col-sm-6 col-md-3">
-                     <a href="productpage.html">
-                        <div class="box-img">
-                           <h4>Product</h4>
-                           <img src="images/product/12.png" alt="" />
-                        </div>
-                     </a>
-                  </div>
-                  <div class="col-lg-3 col-sm-6 col-md-3">
-                     <a href="productpage.html">
-                        <div class="box-img">
-                           <h4>Product</h4>
-                           <img src="images/product/13.png" alt="" />
-                        </div>
-                     </a>
-                  </div>
-                  <div class="categories_link">
-                     <a href="#">Browse all categories here</a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
+{% block pagecontent %}
+	<div class="page-content-product">
+		<div class="main-product">
+			<div class="container">
+				<div class="row clearfix">
+					<div class="find-box">
+						<h1>GANADERAS DEL SUR.</h1>
+						<h4>DESDE 1913 ACOMPAÑANDO AL PRODUCTOR AGROPECUARIO.</h4>
+						<div class="product-sh">
+							<div class="col-sm-6">
+								<div class="form-sh">
+									<input id="searchText" type="text" placeholder="Busqueda de cabañas por nombre">
+								</div>
+							</div>
+							{# <div class="col-sm-3">
+								<div class="form-sh">
+									<select class="selectpicker">
+										<option>Textiles</option>
+										<option>Furniture</option>
+										<option>Leather</option>
+									</select>
+								</div>
+							</div> #}
+							<div class="col-sm-3">
+								<div class="form-sh">
+									<a id="cabanaSearch" class="btn" href="#">Buscar</a>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div class="row clearfix">
+
+					{% for cabana in cabanas %}
+
+						<div class="col-lg-3 col-sm-6 col-md-3">
+							<a href="{{ path('cabana_detail', {'id': cabana.id}) }}">
+								<div class="box-img">
+									<h4>{{ cabana.nombre }}</h4>
+									<img src="{{ asset('uploads/Cabana/Gallery/gallery/' ~ cabana.gallery | first) }}" alt="{{cabana.nombre}}" title="{{cabana.nombre}}"/>
+								</div>
+							</a>
+						</div>
+					{% endfor %}
+
+					<div class="categories_link">
+						<a href="{{ path('cabanas_index', {'nombre': ''}) }}">Mostrar todas las cabañas</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
+  {% block customjavascripts %}
+  <script>
+     $('#cabanaSearch').click(function(){
+     var name = $('#searchText').val();
+     var url = Routing.generate('cabanas_index', {nombre: name})
+     window.location.href = url;
+
+   });
+   </script>
+  
+  {% endblock %}

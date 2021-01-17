@@ -15,9 +15,3 @@ generictable:
     controller: App\Controller\GenericController::getData
     options:
         expose: true
-
-defaultpage:
-    path: /public
-    controller: App\Controller\GenericController::redirectIndex
-    options:
-        expose: true

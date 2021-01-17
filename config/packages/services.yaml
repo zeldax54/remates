@@ -1,6 +1,6 @@
 parameters:
-    mailer_user: zelda
-    sender_name: zelda
+    mailer_user: user@sitio.com
+    sender_name: systemadin
     secret: secrettoken12345
 
 services:
@@ -20,5 +20,10 @@ services:
 
     App\EventListener\UserListener:
         tags:
-            - { name: kernel.event_listener, event: sbs.admin_lte.user, method: onShowUser }    
+            - { name: kernel.event_listener, event: sbs.admin_lte.user, method: onShowUser }   
+
+    FOS\UserBundle\Mailer\Mailer:
+        arguments: ['@mailer']
+           
+     
     
