@@ -51,6 +51,11 @@ class Cabana
      */
     private $lotes;
 
+     /**
+    * @ORM\Column(type="boolean", nullable=false,options={"default": false})
+    */
+    protected $desactivado;
+
     public function __construct()
     {
         $this->lotes = new ArrayCollection();
@@ -184,5 +189,17 @@ class Cabana
     public function __toString()
     {
         return $this->getNombre();
+    }
+
+    public function getDesactivado(): ?bool
+    {
+        return $this->desactivado;
+    }
+
+    public function setDesactivado(bool $desactivado): self
+    {
+        $this->desactivado = $desactivado;
+
+        return $this;
     }
 }

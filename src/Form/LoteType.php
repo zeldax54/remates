@@ -22,6 +22,7 @@ class LoteType extends AbstractType
     {
         $myEntity = new Lote();
         $builder
+        ->add('desactivado')
         ->add('gallery', CroppableGalleryType::class, array(
             'uploadConfig' => array(
                 'uploadRoute' => 'comur_api_upload',     //optional

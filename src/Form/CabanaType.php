@@ -16,6 +16,7 @@ class CabanaType extends AbstractType
     {
         $myEntity = new Cabana();
         $builder
+        ->add('desactivado')
         ->add('logos', CroppableGalleryType::class, array(
             'uploadConfig' => array(
                 'uploadRoute' => 'comur_api_upload',     //optional

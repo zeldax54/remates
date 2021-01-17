@@ -78,6 +78,11 @@ class Lote
      */ 
     private $cabana;
 
+    /**
+    * @ORM\Column(type="boolean", nullable=false,options={"default": false})
+    */
+    protected $desactivado;
+
 
     public function __construct()
     {
@@ -254,6 +259,18 @@ class Lote
     public function setCabana(?Cabana $cabana): self
     {
         $this->cabana = $cabana;
+
+        return $this;
+    }
+
+    public function getDesactivado(): ?bool
+    {
+        return $this->desactivado;
+    }
+
+    public function setDesactivado(bool $desactivado): self
+    {
+        $this->desactivado = $desactivado;
 
         return $this;
     }
