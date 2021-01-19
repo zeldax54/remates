@@ -987,7 +987,7 @@ header .navbar-default .navbar-header {
 	color: #2da0ff;
 }
 
-.dit-t a {
+.dit-t a:not(.cabanaclass) {
 	background: #ffffff;
 	border: 1px solid #ccd4da;
 	border-radius: 2px;
@@ -3131,7 +3131,14 @@ html .ui-button.ui-state-disabled:active {
 .preview-thumbnail.nav-tabs li img {
 	max-width: 100%;
 	display: block;
+	height: 95px;
 }
+
+@media only screen and (max-width: 600px) {
+	.preview-thumbnail.nav-tabs li img {
+		height: 54px !important;
+	}
+  }
 
 .preview-thumbnail.nav-tabs li a {
 	padding: 0;

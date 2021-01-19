@@ -56,6 +56,21 @@ class Cabana
     */
     protected $desactivado;
 
+     /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     */
+    private $afiche;
+
+     /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     */
+    private $condpreofertas;
+
+     /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     */
+    private $catalogdescarga;
+
     public function __construct()
     {
         $this->lotes = new ArrayCollection();
@@ -199,6 +214,42 @@ class Cabana
     public function setDesactivado(bool $desactivado): self
     {
         $this->desactivado = $desactivado;
+
+        return $this;
+    }
+
+    public function getAfiche(): ?string
+    {
+        return $this->afiche;
+    }
+
+    public function setAfiche(?string $afiche): self
+    {
+        $this->afiche = $afiche;
+
+        return $this;
+    }
+
+    public function getCondpreofertas(): ?string
+    {
+        return $this->condpreofertas;
+    }
+
+    public function setCondpreofertas(?string $condpreofertas): self
+    {
+        $this->condpreofertas = $condpreofertas;
+
+        return $this;
+    }
+
+    public function getCatalogdescarga(): ?string
+    {
+        return $this->catalogdescarga;
+    }
+
+    public function setCatalogdescarga(?string $catalogdescarga): self
+    {
+        $this->catalogdescarga = $catalogdescarga;
 
         return $this;
     }

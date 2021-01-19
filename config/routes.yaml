@@ -15,3 +15,9 @@ generictable:
     controller: App\Controller\GenericController::getData
     options:
         expose: true
+
+filterlotes:
+    path: /filterlotes
+    controller: App\Controller\GenericController::filterLotes
+    options:
+        expose: true

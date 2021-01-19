@@ -12,6 +12,7 @@
         <thead>
             <tr>               
                 <th data-column-id="nombre" >Nombre</th>
+                <th data-column-id="cabana" data-formatter="cabana">Cabaña</th>
                 <th data-column-id="info">PreOferta</th>
                 <th data-column-id="condicionventa">Condicion de venta</th>
                 <th data-column-id="fechainicio" data-formatter="fechainicio">Fecha de Inicio</th>
@@ -28,6 +29,6 @@
 
  {% block customjavascripts %}
     <script>
-    InitializaGrid('grid-data','Lote',["nombre"]);
+      InitializaGrid('grid-data','Lote',["nombre"],"cabana");
     </script>
  {% endblock %}

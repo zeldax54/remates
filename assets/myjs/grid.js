@@ -1,14 +1,15 @@
 
-   function InitializaGrid(containerid,entityName,campos)
+   function InitializaGrid(containerid,entityName,campos,parentEntity)
    {
-
+         
       var grid = $("#"+containerid).bootgrid({
         ajax: true,
         post: function ()
         {
             return {
                 entityName: entityName,
-                columnsName:campos
+                columnsName:campos,
+                parentEntity:parentEntity
     
             };
         },
@@ -26,7 +27,11 @@
             "fechacierre": function(column, row)
             {
                 return "" + row.fechacierre.date.substring(0, 20);
-            }
+            },
+            "cabana": function(column, row)
+            {
+                return row.cabana == null?"NO ASIGNADA":row.cabana.nombre;             
+            },
         }
        }).on("loaded.rs.jquery.bootgrid", function()
       {

@@ -33,8 +33,8 @@ class CabanaType extends AbstractType
             ),
             'cropConfig' => array(
                 'disable' => false,      //optional
-                'minWidth' => 300,
-                'minHeight' => 200,
+                'minWidth' => 250,
+                'minHeight' => 150,
                 'aspectRatio' => true,         //optional
                 'cropRoute' => 'comur_api_crop',   //optional
                 'forceResize' => false,       //optional
@@ -78,6 +78,13 @@ class CabanaType extends AbstractType
             )
         ))
             ->add('nombre')
+            ->add('afiche',null, array(
+                'label' => 'URL Afiche'))
+            ->add('condpreofertas',null, array(
+                'label' => 'URL Condiciones de Preoferta'))
+                ->add('catalogdescarga',null, array(
+                    'label' => 'URL Catálogo'))
+
             ->add('descripcion',CKEditorType::class,[
                'config'=>[
                    'uiColor'=>'#00a65a',

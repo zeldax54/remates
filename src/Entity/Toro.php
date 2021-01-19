@@ -45,6 +45,16 @@ class Toro
      */ 
      private $lote;
 
+     /**
+     * @ORM\Column(type="float", nullable=false)
+     */
+     private $preciobase;
+
+    /**
+     * @ORM\Column(type="float", nullable=false)
+     */
+     private $ofertaActual;
+
    
     public function getId(): ?int
     {
@@ -125,6 +135,30 @@ class Toro
     public function __toString()
     {
         return $this->nombre;
+    }
+
+    public function getPreciobase(): ?float
+    {
+        return $this->preciobase;
+    }
+
+    public function setPreciobase(float $preciobase): self
+    {
+        $this->preciobase = $preciobase;
+
+        return $this;
+    }
+
+    public function getOfertaActual(): ?float
+    {
+        return $this->ofertaActual;
+    }
+
+    public function setOfertaActual(float $ofertaActual): self
+    {
+        $this->ofertaActual = $ofertaActual;
+
+        return $this;
     }
 
 }

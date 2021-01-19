@@ -1,10 +1,143 @@
 {% extends 'frontpages/front_layout.html.twig' %}
 
-{% block pagecontent %}
-	{{ cabana.nombre }}
+{% block customstyles %}
+	<style></style>
 {% endblock %}
-  {% block customjavascripts %}
-  
-   </script>
-  
-  {% endblock %}
+{% block pagecontent %}
+
+	<div class="page-content-product">
+
+		<div class="container">
+
+
+			<div class="row">
+
+				{% for logo in cabana.logos %}
+					<div class="col-lg-3 col-sm-2 col-md-2" style=" margin-left: 4%;">
+						<div class="">
+							<img src="{{ asset('uploads/Cabana/Logo/gallery/' ~ logo ) }}" alt="{{cabana.nombre}}" title="{{cabana.nombre}}"/></div>
+					</div>
+				{% endfor %}
+			</div>
+
+
+			<div class="row">
+
+				<div class="left-profile-box-m prod-page"></div>
+			</div>
+			<div class="col-md-7 col-sm-8">
+				<div class="md-prod-page">
+					<div class="md-prod-page-in">
+						<div class="page-preview">
+
+							<div class="preview">
+								<div class="preview-pic tab-content">
+									{% for g in cabana.gallery %}
+										<div {% if loop.index == 1 %} class="tab-pane active" {% else %} class="tab-pane" {% endif %} id="pic-{{loop.index}}"><img src="{{ asset('uploads/Cabana/Gallery/gallery/' ~ g ) }}" alt="#"></div>
+									{% endfor %}
+									{% for v in cabana.videos|split(';')  %}
+										<div class="tab-pane" id="pic-{{v ~ loop.index}}">
+											<iframe width="720" height="400" src="https://www.youtube.com/embed/{{v}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+										</div>
+									{% endfor %}
+								</div>
+
+								<ul class="preview-thumbnail nav nav-tabs">
+									{% for g in cabana.gallery %}
+										<li {% if loop.index == 1 %} class="active" {% endif %}>
+											<a data-target="#pic-{{loop.index }}" data-toggle="tab"><img src="{{ asset('uploads/Cabana/Gallery/gallery/' ~ g ) }}" alt="#"></a>
+										</li>
+									{% endfor %}
+									{% for v in cabana.videos|split(';') %}
+										<li>
+											<a data-target="#pic-{{v ~ loop.index }}" data-toggle="tab"><img src="https://img.youtube.com/vi/{{ v }}/maxresdefault.jpg" alt="#"></a>
+										</li>
+									{% endfor %}
+
+								</ul>
+							</div>
+						</div>
+						<div class="btn-dit-list clearfix"></div>
+					</div>
+					<div class="description-box">
+						<div class="dex-a">
+							<h4>{{ cabana.nombre }}</h4>
+							{{ cabana.descripcion | raw }}
+
+						</div>
+
+					</div>
+				</div>
+
+				<div class="similar-box">
+					<h2>Lotes en venta | Pre-ofertas
+					</h2>
+					<div class="row cat-pd">
+
+						{% for lote in cabana.lotes %}
+							{% if lote.desactivado == false or lote.desactivado is null %}
+								<div class="col-md-6">
+									<div class="small-box-c">
+										<div class="small-img-b">
+											<a href="{{ path('lote_detail', {'id': lote.id}) }}"><img class="img-responsive" src="{{ asset('uploads/Lote/gallery/' ~ lote.gallery|first ) }}" alt="#"/></a>
+										</div>
+										<div class="dit-t clearfix">
+											<div class="left-ti">
+												<h4>{{ lote.nombre }}</h4>
+												{# <p>By
+													<span>Beko</span>
+													under
+													<span>Chairs</span>
+												</p> #}
+											</div>
+										</div>
+										<div class="prod-btn">
+											<a href="{{ path('lote_detail', {'id': lote.id}) }}">
+												<i class="" aria-hidden="true"></i>
+												Hacer preoferta</a>											
+											<p>{{ lote.toros|length }} Toros</p>
+										</div>
+
+									</div>
+								</div>
+							{% endif %}
+						{% endfor %}
+					</div>
+
+				</div>
+
+
+			</div>
+
+			{# Botones #}
+
+			<div class="col-md-3 col-sm-12">
+				<div class="price-box-right">
+					{% if cabana.afiche is not null %}
+						<a href="{{ cabana.afiche}}">
+							<span class="glyphicon glyphicon-calendar">
+								AFICHE / DETALLES DEL EVENTO</span>
+						</a>
+					{% endif %}
+					{% if cabana.condpreofertas is not null %}
+						<a href="{{ cabana.condpreofertas }}">
+							<span class="fa fa-handshake-o">
+								CONDICIONES DE LAS PREOFERTAS</span>
+						</a>
+					{% endif %}
+					{% if cabana.catalogdescarga is not null %}
+						<a href="{{ cabana.catalogdescarga }}">
+							<span class="fa fa-book">
+								DESCARGAR CATALOGO</span>
+						</a>
+					{% endif %}
+				</div>
+			</div>
+
+
+			{# Botones End #}
+
+
+		</div>
+	</div>
+</div>{% endblock %}{% block customjavascripts %}{% endblock %}
