@@ -64,27 +64,32 @@
 													<div class="small-box-c">
 														<div class="small-img-b">
 															{% if lote.gallery|length > 0 %}
-																<img src="{{ asset('uploads/Lote/gallery/' ~ lote.gallery|first ) }}" alt="#"/>
+																<a href="{{ path('lote_detail', {'id': lote.id }) }}"><img src="{{ asset('uploads/Lote/gallery/' ~ lote.gallery|first ) }}" alt="#"/></a>
 															{% else %}
-																<img src="{{ asset('uploads/genericsimages/bullsilhouette.jpg') }}" alt="#"/>
+																<a href="{{ path('lote_detail', {'id': lote.id }) }}"><img src="{{ asset('uploads/genericsimages/bullsilhouette.jpg') }}" alt="#"/></a>
 															{% endif %}
 														</div>
 														<div class="dit-t clearfix">
 															<div class="left-ti">
 																<h4>{{ lote.nombre }}</h4>
 																<p>
+																
 																	{% if lote.cabana is not null %}
+																	
 																		<a class="cabanaclass" href="{{ path('cabana_detail', {'id': lote.cabana.id }) }}">
 																			<span>{{ lote.cabana.nombre }}</span>
 																		</a>
+																		{% else %}
+																		<span>NO ASIGNADO</span>
 																	{% endif %}
 																</p>
 															</div>
-
-															<a href="#" tabindex="0">
-																<p>Oferta Actual:</p>
-																$1220</a>
 														</div>
+														
+															<div><a href="#" tabindex="0">
+																<p>Oferta Actual: - $</p>
+															    	</a>
+																</div>
 														<div class="prod-btn">
 															<a href="{{ path('lote_detail', {'id': lote.id }) }}">
 																<i class="" aria-hidden="true"></i>

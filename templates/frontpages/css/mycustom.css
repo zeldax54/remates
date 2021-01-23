@@ -1,0 +1,42 @@
+.lotendic{
+    color: #1b801b;
+    
+}
+
+.mypane
+{
+    margin-left: 5%;
+}
+
+.priceclass{
+    margin-left: 14%;
+}
+
+.caption{
+    position: absolute;
+    bottom: 2%;
+    left: 5%;
+    /* background: red; */
+    color: #041f04;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+video-responsive {
+    height: 0;
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    position: relative;
+    }
+.video-responsive iframe, .video-responsive object, .video-responsive embed {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    }
+
+    .ofertaform{
+        border: 1px #e6f1e8 solid !important;
+    }

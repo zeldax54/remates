@@ -30,6 +30,12 @@ class Kernel extends BaseKernel
         return \dirname(__DIR__);
     }
 
+    public function __construct($environment, $debug)
+    {
+        date_default_timezone_set("America/Argentina/Buenos_Aires");
+        parent::__construct($environment, $debug);
+    }  
+
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $container->addResource(new FileResource($this->getProjectDir().'/config/bundles.php'));

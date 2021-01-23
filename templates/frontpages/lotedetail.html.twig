@@ -1,9 +1,215 @@
 {% extends 'frontpages/front_layout.html.twig' %}
 
 {% block customstyles %}
-	<style></style>
+	<style>
+		.preview-thumbnail.nav-tabs li {
+			width: 13% !important;
+		}
+
+		@media only screen and(max-width: 600px) {
+			.preview-thumbnail.nav-tabs li {
+				width: 24% !important;
+			}
+		}
+	</style>
 {% endblock %}
 {% block pagecontent %}
 
-LOTETETETETETETETE
-	{% endblock %}{% block customjavascripts %}{% endblock %}
+	<div class="product-page-main">
+		<div class="container">
+			<div class="row">
+
+
+				<div class="col-md-10 col-xs-12">
+					<div class="md-prod-page">
+						<div class="md-prod-page-in">
+							<div class="page-preview">
+								<div class="preview">
+									<div class="your-class">
+										{% for g in lote.gallery %}										
+											<div><img src="{{ asset('uploads/Lote/gallery/' ~ g ) }}" alt="#"></div>
+										{% endfor %}
+										{% for t in lote.toros %}
+											{% for g in t.gallery %}											
+												<div><img src="{{ asset('uploads/Toro/gallery/' ~ g ) }}" alt="#">
+													<div class="caption">
+														<span>{{t.nombre}}</span>
+													</div>
+												</div>
+											{% endfor %}
+										{% endfor %}
+										{% for t in lote.toros %}
+											{% for v in t.videos|split(';') %}											
+												<div>
+													<iframe width="1080" height="400" src="https://www.youtube.com/embed/{{v}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+												</div>
+											{% endfor %}
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+							<div class="btn-dit-list clearfix"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="prod-page-title"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-sm-12">
+					<div class="md-prod-page">
+						<div class="md-prod-page-in">
+							<div class="page-preview">
+								<div class="preview">
+									<p>
+										<strong class="lotendic">Cantidad:</strong>
+										{{lote.toros | length}}</p>
+									<p>
+										<strong class="lotendic">Categoría:</strong>
+										{{lote.categoria.nombre}}</p>
+									<p>
+										<strong class="lotendic">Raza:</strong>
+										{{lote.raza.nombre}}</p>
+									<p>
+										<strong class="lotendic">Cabaña:</strong>
+										{{lote.cabana.nombre}}</p><br>
+									<p>
+										<strong class="lotendic">Observaciones:</strong>:</p>
+									{% for toro in lote.toros %}
+										<strong>{{toro.nombre}}</strong>
+										<p>{{toro.info}}</p><br>
+									{% endfor %}
+									<p>
+										<strong class="lotendic">Preoferta:</strong>
+										{{lote.info}}</p>
+									<p>
+										<strong class="lotendic">Condiciones de Venta:</strong>
+										{{lote.condicionventa}}</p>
+									<p>
+										<strong class="lotendic">Inicio de las Pre-Ofertas:</strong>
+										{{lote.fechainicio|date('d-m-Y H:i:s')}}</p>
+									<p>
+										<strong class="lotendic">Cierre PreOfertas:</strong>
+										{{lote.fechacierre|date('d-m-Y H:i:s')}}</p>
+									<p>
+										<strong class="lotendic">Incremento Mínimo:</strong>
+										$<span id="incminimoinpage">{{lote.incrementominimo}}</span></p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="col-md-4 col-sm-12">
+					<div class="md-prod-page">
+						<div class="md-prod-page-in">
+							<div class="page-preview">
+								<div class="preview">
+									{% for toro in lote.toros %}
+
+										<div class="mypane">
+											<p>{{toro.nombre}}</p>
+											<div class="priceclass">
+												<p>Precio base: ${{toro.preciobase}}</p>
+												<p class="lotendic">Oferta Actual:
+													{% if toro.ofertaActual ==0 %}
+														-
+													{% else %}
+														{{toro.ofertaActual}}
+													{% endif %}
+												</p>
+											</div>
+										</div><br>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-12">
+					<div class="price-box-right">
+						{% if preoferActive == false or preoferActive is null %}
+							<p>Las preofertas estan deshabilitadas para este Lote</p>
+						{% else %}
+							<h4>PREOFERTA</h4>
+							<form id="oferform" class="get-form">
+
+								<select required name="toro" id="toroselectid" class="form-control select2">
+									
+									{% for toro in lote.toros%}
+										<option value="{{toro.id}}">{{toro.nombre}}</option>
+									{% endfor %}
+								</select>
+								<input class="ofertaform" type="text" name="nombre" required placeholder="Nombre y Apellido"><br>
+								<input class="ofertaform" type="text" name="empresa" placeholder="Empresa"><br>
+								<input class="ofertaform" type="number" name="dnicuit" required placeholder="DNI o CUIT">
+								<input class="ofertaform" type="email" name="email" required placeholder="Email">
+								<input class="ofertaform" type="text" name="telefono" required placeholder="Teléfono">
+								 <input class="ofertaform" type="text" name="lote" hidden value="{{lote.id}}" placeholder="Teléfono">								
+								<input class="ofertaform" type="number" required id="ofertaId" name="oferta" placeholder="Ingrese su preoferta">								
+								<h5 style="color:red;" id="messageofer"></h5>								
+								<h5>Las pre-ofertas estan sujetas a aprobación</h5>
+							</form>
+							<button id="sendoferbutton" class="btn btn-success" type="submit" form="oferform" value="Submit">Hacer Pre-Oferta</button>
+							  <div id="calculandodiv" >
+                                       <div class="sk-wave">
+                                          <div class="sk-rect sk-rect1"></div>
+                                          <div class="sk-rect sk-rect2"></div>
+                                          <div class="sk-rect sk-rect3"></div>
+                                          <div class="sk-rect sk-rect4"></div>
+                                          <div class="sk-rect sk-rect5"></div>
+                                       </div>
+                                       <span>Calculando precio...</span>
+                               </div>
+
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
+{% block customjavascripts %}
+	<script>
+		$(document).ready(function () {
+		$('#calculandodiv').hide();
+        var loteId = '{{ lote.id }}';
+        var toroId = $('#toroselectid').val();
+       //  GetlastOfer(loteId, toroId);
+
+         $('#toroselectid').change(function () {
+            var loteId = '{{ lote.id }}';
+            var toroId = this.value;
+            GetlastOfer(loteId, toroId);
+          });
+		  ////////////
+
+var typingTimer;          
+var doneTypingInterval = 1000;  
+
+//on keyup, start the countdown
+$('#ofertaId').keyup(function(){
+    clearTimeout(typingTimer);
+    if ($('#ofertaId').val()) {
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    }
+});
+
+//user is "finished typing," do something
+function doneTyping () {
+	var loteId = '{{ lote.id }}';
+     manageoferinpage(loteId)		
+}
+
+       	   
+         
+   });
+	</script>
+{% endblock %}

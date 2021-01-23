@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ToroRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -54,6 +56,16 @@ class Toro
      * @ORM\Column(type="float", nullable=false)
      */
      private $ofertaActual;
+
+     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Oferta" , mappedBy="toro", cascade={"persist"})
+     */
+    private $ofertas;
+
+    public function __construct()
+    {
+        $this->ofertas = new ArrayCollection();
+    }
 
    
     public function getId(): ?int
@@ -157,6 +169,36 @@ class Toro
     public function setOfertaActual(float $ofertaActual): self
     {
         $this->ofertaActual = $ofertaActual;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Oferta[]
+     */
+    public function getOfertas(): Collection
+    {
+        return $this->ofertas;
+    }
+
+    public function addOferta(Oferta $oferta): self
+    {
+        if (!$this->ofertas->contains($oferta)) {
+            $this->ofertas[] = $oferta;
+            $oferta->setToro($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOferta(Oferta $oferta): self
+    {
+        if ($this->ofertas->removeElement($oferta)) {
+            // set the owning side to null (unless already changed)
+            if ($oferta->getToro() === $this) {
+                $oferta->setToro(null);
+            }
+        }
 
         return $this;
     }

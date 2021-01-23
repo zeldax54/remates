@@ -47,6 +47,7 @@ class ToroType extends AbstractType
             )
         ))
             ->add('Nombre')
+            ->add('preciobase')
             ->add('info')
             ->add('videos')
             ->add('lote')

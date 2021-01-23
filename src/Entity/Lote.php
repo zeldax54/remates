@@ -83,10 +83,16 @@ class Lote
     */
     protected $desactivado;
 
+     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Oferta" , mappedBy="lote", cascade={"persist"})
+     */
+    private $ofertas;
+
 
     public function __construct()
     {
         $this->toros = new ArrayCollection();
+        $this->ofertas = new ArrayCollection();
     }
 
     
@@ -271,6 +277,36 @@ class Lote
     public function setDesactivado(bool $desactivado): self
     {
         $this->desactivado = $desactivado;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Oferta[]
+     */
+    public function getOfertas(): Collection
+    {
+        return $this->ofertas;
+    }
+
+    public function addOferta(Oferta $oferta): self
+    {
+        if (!$this->ofertas->contains($oferta)) {
+            $this->ofertas[] = $oferta;
+            $oferta->setLote($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOferta(Oferta $oferta): self
+    {
+        if ($this->ofertas->removeElement($oferta)) {
+            // set the owning side to null (unless already changed)
+            if ($oferta->getLote() === $this) {
+                $oferta->setLote(null);
+            }
+        }
 
         return $this;
     }

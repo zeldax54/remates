@@ -32,7 +32,6 @@ class CatalogoController extends AbstractController
            $search['nombre']=$nombre;
         $cabanas = $this->getDoctrine()->getRepository(Cabana::class)->findBy($search);
         return $this->render('frontpages/cabanas.html.twig', [
-
             'cabanas' => $cabanas,
         ]);
     }
@@ -74,9 +73,18 @@ class CatalogoController extends AbstractController
      * @Route("/lote/{id}", name="lote_detail",options={"expose"=true}, methods={"GET"})
      */
     public function LotesDetail(Lote $lote): Response
-    {      
+    {
+  
+        $today = new \DateTime('now');
+        $startdate = $lote->getFechainicio();
+        $enddate = $lote->getFechacierre();
+
+        $preoferActive = false;
+        $preoferActive = ($today >= $startdate && $today<=$enddate);     
+
         return $this->render('frontpages/lotedetail.html.twig', [
             'lote' => $lote,
+            'preoferActive'=>$preoferActive
         ]);
     }
 }
