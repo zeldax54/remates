@@ -7,6 +7,8 @@ $(document).ready(function () {
     cssEase: "linear",
     slidesToShow: 1,
     adaptiveHeight: true,
+    enableCellNavigation: true,
+    arrows: true,
     responsive: [
       {
         breakpoint: 1024,
@@ -75,9 +77,9 @@ $(".selectpicker").change(function () {
           "<p>" +
           getCabanaName(obj) +
           "</p>" +
+          "</div>" + 
           "</div>" +
-          '<a href="#" tabindex="0">	<p>Oferta Actual:</p> $1220</a>' +
-          "</div>" +
+          '<div><p style="height:54px">'+obj.oferInfo+'</p></div>' +
           '<div class="prod-btn">' +
           '<a href="' +
           Routing.generate("lote_detail", { id: obj.id }) +
@@ -153,14 +155,12 @@ async function manageoferinpage(loteId)
       toroId: toroId,
     };
     var actualValue = $("#ofertaId").val();   
-    var responseData = await getlastOferLive(datos,false);
-    if (responseData.hasprev == false) {
-        console.log('NOT HASPREV');
+    var responseData = await getlastOferLive(datos,false);     
         var actualValue = $("#ofertaId").val();
         if (actualValue < responseData.preciobase) {
           $("#messageofer").show("");
           $("#messageofer").html(
-            "La oferta debe ser mayor o igual que el precio base"
+            "La oferta debe ser mayor o igual a la oferta actual con un incremento mínimo de $"+ responseData.incminimo
           );
           $("#sendoferbutton").hide();
         } else {
@@ -168,29 +168,8 @@ async function manageoferinpage(loteId)
           $("#messageofer").hide("");
         } 
         $('#calculandodiv').hide(); 
-    }
-     else {
-      //Si ya hay oferta
-        console.log('HASPREV'); 
-        if (
-             (parseInt(actualValue) >= responseData.preciobase ) && ((actualValue - responseData.preciobase) % responseData.incminimo == 0)
-           ) {
-            $("#sendoferbutton").show();
-            $("#messageofer").hide("");
-            $('#calculandodiv').hide(); 
-        
-        } else {
-          $("#messageofer").show("");
-          $("#messageofer").html(
-            "La oferta debe ser mayor que la oferta actual vigente con incremento mínimo de $" +
-              responseData.incminimo );
-              $('#calculandodiv').hide(); 
-             
-        }
-    
-    }
-  }
-  
+   
+    }  
  }
 // }
 

@@ -37,7 +37,7 @@
 					{% for cabana in cabanas %}
 
 						<div class="col-lg-3 col-sm-6 col-md-3">
-							<a href="{{ path('cabana_detail', {'id': cabana.id}) }}">
+							<a href="{{ path('cabana_detail', {'urlsegment': cabana.urlsegment}) }}">
 								<div class="box-img">
 									<h4>{{ cabana.nombre }}</h4>
 									<img src="{{ asset('uploads/Cabana/Gallery/gallery/' ~ cabana.gallery | first) }}" alt="{{cabana.nombre}}" title="{{cabana.nombre}}"/>

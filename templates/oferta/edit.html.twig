@@ -1,0 +1,13 @@
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
+
+
+{% block page_title %} Oferta {% endblock %}
+{% block page_subtitle %}   {% endblock %}
+
+{% block page_content_before %}    
+
+    {{ include('oferta/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('oferta_index') }}">back to list</a>
+
+{% endblock %}

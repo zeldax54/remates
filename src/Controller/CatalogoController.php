@@ -37,10 +37,11 @@ class CatalogoController extends AbstractController
     }
 
      /**
-     * @Route("/cabana/{id}", name="cabana_detail",options={"expose"=true}, methods={"GET"})
+     * @Route("/cabana/{urlsegment}", name="cabana_detail",options={"expose"=true}, methods={"GET"})
      */
-    public function cabanaDetail(Cabana $cabana): Response
-    {      
+    public function cabanaDetail($urlsegment): Response
+    {  
+        $cabana = $this->getDoctrine()->getRepository(Cabana::class)->findOneBy(['urlsegment' => $urlsegment]);
         return $this->render('frontpages/cabanadetail.html.twig', [
             'cabana' => $cabana,
         ]);
@@ -55,6 +56,7 @@ class CatalogoController extends AbstractController
         if($nombre!=null)
            $search['nombre']=$nombre;
         $lotes = $this->getDoctrine()->getRepository(Lote::class)->findBy($search);
+        
         $razas = $this->getDoctrine()->getRepository(Razas::class)->findAll();
         $cabanas = $this->getDoctrine()->getRepository(Cabana::class)->findAll();
         $categorias = $this->getDoctrine()->getRepository(Categoria::class)->findAll();
@@ -76,8 +78,8 @@ class CatalogoController extends AbstractController
     {
   
         $today = new \DateTime('now');
-        $startdate = $lote->getFechainicio();
-        $enddate = $lote->getFechacierre();
+        $startdate = $lote->getCabana()->getFechainicio();
+        $enddate = $lote->getCabana()->getFechacierre();
 
         $preoferActive = false;
         $preoferActive = ($today >= $startdate && $today<=$enddate);     
@@ -87,4 +89,9 @@ class CatalogoController extends AbstractController
             'preoferActive'=>$preoferActive
         ]);
     }
+
+    
+   
+
+    
 }

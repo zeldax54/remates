@@ -1,0 +1,61 @@
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
+
+{% block page_title %} Oferta {% endblock %}
+{% block page_subtitle %}  Eliminar {% endblock %}
+
+{% block page_content_before %}
+  
+  <div class="marker">
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ofertum.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ ofertum.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Empresa</th>
+                <td>{{ ofertum.empresa }}</td>
+            </tr>
+            <tr>
+                <th>Dnicuit</th>
+                <td>{{ ofertum.dnicuit }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ ofertum.email }}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ ofertum.telefono }}</td>
+            </tr>
+            <tr>
+                <th>Ofertado</th>
+                <td>{{ ofertum.ofertado }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ ofertum.status }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ ofertum.fecha ? ofertum.fecha|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Token</th>
+                <td>{{ ofertum.token }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('oferta_index') }}">back to list</a>
+
+    <a href="{{ path('oferta_edit', {'id': ofertum.id}) }}">edit</a>
+
+    {{ include('oferta/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

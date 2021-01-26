@@ -7,8 +7,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Comur\ImageBundle\Form\Type\CroppableGalleryType;
-use Comur\ImageBundle\Form\Type\CollectionsType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+
 
 class CabanaType extends AbstractType
 {
@@ -78,12 +79,40 @@ class CabanaType extends AbstractType
             )
         ))
             ->add('nombre')
+            ->add('urlsegment',null, array(
+                'label' => 'Segmento URL para la ruta web',
+                'required'=>true))            
             ->add('afiche',null, array(
                 'label' => 'URL Afiche'))
             ->add('condpreofertas',null, array(
                 'label' => 'URL Condiciones de Preoferta'))
-                ->add('catalogdescarga',null, array(
-                    'label' => 'URL Catálogo'))
+            ->add('catalogdescarga',null, array(
+                 'label' => 'URL Catálogo'))                  
+            ->add('info',null,[
+                        'label'=>'PreOferta'
+                    ])
+                    ->add('condicionventa',null,[
+                        'label'=>'Condición de Venta'
+                    ])                        
+                   
+                    ->add('fechainicio', DateTimeType::class, [
+                        'widget' => 'single_text',
+                        'date_label' => 'Fecha de Inicio',
+                        'placeholder' => [
+                            'year' => 'Año', 'month' => 'Mes', 'day' => 'Dia',
+                            'hour' => 'Hora', 'minute' => 'Minuto', 'second' => 'Segundo',
+                        ],
+                        'required'=>true
+                    ])
+                    ->add('fechacierre', DateTimeType::class, [
+                        'widget' => 'single_text',
+                        'date_label' => 'Fecha de Cierre',
+                        'placeholder' => [
+                            'year' => 'Año', 'month' => 'Mes', 'day' => 'Dia',
+                            'hour' => 'Hora', 'minute' => 'Minuto', 'second' => 'Segundo',
+                        ],
+                        'required'=>true
+                    ])
 
             ->add('descripcion',CKEditorType::class,[
                'config'=>[

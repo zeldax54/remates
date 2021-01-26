@@ -69,8 +69,9 @@ class GenericController extends AbstractController
         if ($parentEntity != null) {
             $qb->select("E", "P")
                 ->from("App:" . $entityName, "E")
-                ->leftJoin("E." . $parentEntity, "P");
-        } else {
+                ->leftJoin("E." . $parentEntity, "P");       
+            }
+         else {
             $qb
                 ->select("E")
                 ->from("App:" . $entityName, "E");
@@ -92,7 +93,7 @@ class GenericController extends AbstractController
     }
 
 
-    public function filterLotes(Request $request, \Symfony\Component\Asset\Packages $assetsManager)
+    public function filterLotes(Request $request)
     {
         $raza = $request->request->get('raza');
         $categoria = $request->request->get('categoria');
@@ -119,6 +120,7 @@ class GenericController extends AbstractController
                 $r['portadaImg'] =   $request->getUriForPath('/uploads/Lote/Gallery/' . reset($r['gallery']));
             else
                 $r['portadaImg']  =   $request->getUriForPath('/uploads/genericsimages/bullsilhouette.jpg');
+                $r['oferInfo'] = $this->getDoctrine()->getRepository(Lote::class)->find($r['id'])->OferTextInfo();
         }
 
         return new JsonResponse($result);
@@ -137,8 +139,7 @@ class GenericController extends AbstractController
         $preciobase = $this->getDoctrine()->getRepository(Toro::class)->find($toroId)->getPreciobase();;
         $hasprev = !count($oferta) == 0;      
         $resp = new stdClass();
-        $resp->preciobase = $hasprev == false ? $preciobase:$oferta[0]->getOfertado() + $lote->getIncrementominimo();
-        $resp->hasprev = $hasprev;
+        $resp->preciobase = $hasprev == false ? $preciobase:$oferta[0]->getOfertado() + $lote->getIncrementominimo();     
         $resp->incminimo = $lote->getIncrementominimo();
         return new JsonResponse($resp);
     }

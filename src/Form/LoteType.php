@@ -8,9 +8,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Comur\ImageBundle\Form\Type\CroppableGalleryType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+
 
 
 
@@ -56,37 +55,11 @@ class LoteType extends AbstractType
             ->add('nombre')
             ->add('cabana')
             ->add('categoria')
-            ->add('raza')
-
-            ->add('info',null,[
-                'label'=>'PreOferta'
-            ])
-            ->add('condicionventa',null,[
-                'label'=>'Condición de Venta'
-            ])
+            ->add('raza')       
             ->add('incrementominimo',IntegerType::class,[
                 'label'=>'Incremento Mínimo',
                 
-                ] )            
-           
-            ->add('fechainicio', DateTimeType::class, [
-                'widget' => 'single_text',
-                'date_label' => 'Fecha de Inicio',
-                'placeholder' => [
-                    'year' => 'Año', 'month' => 'Mes', 'day' => 'Dia',
-                    'hour' => 'Hora', 'minute' => 'Minuto', 'second' => 'Segundo',
-                ],
-                'required'=>true
-            ])
-            ->add('fechacierre', DateTimeType::class, [
-                'widget' => 'single_text',
-                'date_label' => 'Fecha de Cierre',
-                'placeholder' => [
-                    'year' => 'Año', 'month' => 'Mes', 'day' => 'Dia',
-                    'hour' => 'Hora', 'minute' => 'Minuto', 'second' => 'Segundo',
-                ],
-                'required'=>true
-            ])
+                ] )     
             ->add('toros',null, array(
             'by_reference' => false))
         ;

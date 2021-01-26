@@ -31,32 +31,12 @@ class Lote
      * @ORM\Column(type="string", length=255)
      */
     private $nombre;
-
-    /**
-     * @ORM\Column(type="string", length=500)
-     */
-    private $info;
-
-    /**
-     * @ORM\Column(type="string", length=300)
-     */
-    private $condicionventa;
-
+   
       /**
      * @ORM\Column(type="float", nullable=false)
      */
     private $incrementominimo;
- 
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $fechainicio;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $fechacierre;
+  
   
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Toro" , mappedBy="lote", cascade={"persist"})
@@ -112,57 +92,7 @@ class Lote
 
         return $this;
     }
-
-    public function getInfo(): ?string
-    {
-        return $this->info;
-    }
-
-    public function setInfo(string $info): self
-    {
-        $this->info = $info;
-
-        return $this;
-    }
-
-    public function getCondicionventa(): ?string
-    {
-        return $this->condicionventa;
-    }
-
-    public function setCondicionventa(string $condicionventa): self
-    {
-        $this->condicionventa = $condicionventa;
-
-        return $this;
-    }
-
-    public function getFechainicio(): ?\DateTimeInterface
-    {
-       
-        return $this->fechainicio;
-    }
-
-    public function setFechainicio(\DateTimeInterface $fechainicio): self
-    {
-       
-        $this->fechainicio = $fechainicio;
-        return $this;
-    }
-
-    public function getFechacierre(): ?\DateTimeInterface
-    {
-       
-        return $this->fechacierre;
-    }
-
-    public function setFechacierre(\DateTimeInterface $fechacierre): self
-    {
-       
-        $this->fechacierre = $fechacierre;
-        return $this;
-    }
-
+  
     public function getUploadDir()
     {
         return 'Lote';
@@ -309,6 +239,20 @@ class Lote
         }
 
         return $this;
+    }
+
+    
+    public function OferTextInfo()
+    {
+        $info = '';
+        foreach($this->toros as $toro)
+        {
+            $ofertaActual = $toro->getOfertaActual();
+            $info.=$toro->getNombre().':';
+            $info.= $ofertaActual > 0 ? $ofertaActual:'-';
+            $info.='|';
+        }
+        return $info;
     }
 
 }

@@ -1,0 +1,39 @@
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
+
+{% block title %}Lotes index{% endblock %}
+
+{% block page_title %} Ofertas {% endblock %}
+{% block page_subtitle %}  index {% endblock %}
+
+{% block page_content_before %}
+ <div class="row">
+    <div class="col-md-9 col-xs-9 tablecontainer">
+    <table id="grid-data" class="table table-condensed table-hover table-striped">
+        <thead>
+            <tr>              
+                <th data-column-id="nombre" >Nombre</th>
+                <th data-column-id="empresa" >Empresa</th>
+                <th data-column-id="dnicuit" >Dnicuit</th>
+                <th data-column-id="email">Email</th>
+                <th data-column-id="telefono" >Telefono</th>
+                <th data-column-id="ofertado" >Ofertado</th>
+                <th data-column-id="status" >Status</th>
+                <th data-column-id="fecha" data-formatter="fecha">Fecha</th>
+                <th data-column-id="toro" data-formatter="toro">Toro</th>           
+                <th data-column-id="commands" data-formatter="commands" data-sortable="false">Acciones </th>
+            </tr>
+        </thead>     
+    </table>
+      </div>
+
+ 
+     </div>
+   
+{% endblock %}
+
+ {% block customjavascripts %}
+    <script>
+      InitializaGrid('grid-data','Oferta',["nombre","empresa","email","status"],"toro");
+    </script>
+ {% endblock %}
+

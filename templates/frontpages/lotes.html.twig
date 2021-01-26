@@ -25,7 +25,7 @@
 									<li class="dropdown">
 										<form>
 											<select id="razasfilter" class="selectpicker">
-												<option value="-1">Raza</option>
+												<option value="-1">Todas las razas</option>
 												{% for r in razas %}
 													<option value={{r.id}}>{{r.nombre}}</option>
 												{% endfor %}
@@ -35,7 +35,7 @@
 									<li class="dropdown">
 										<form>
 											<select id="categoriasfilter" class="selectpicker">
-												<option value="-1">Categoría</option>
+												<option value="-1">Todas las categorías</option>
 												{% for c in categorias %}
 													<option value={{c.id}}>{{c.nombre}}</option>
 												{% endfor %}
@@ -45,7 +45,7 @@
 									<li class="dropdown">
 										<form>
 											<select id="cabanasfilter" class="selectpicker">
-												<option value="-1">Cabaña</option>
+												<option value="-1">Todas las cabaña</option>
 												{% for c in cabanas %}
 													<option value={{c.id}}>{{c.nombre}}</option>
 												{% endfor %}
@@ -76,7 +76,7 @@
 																
 																	{% if lote.cabana is not null %}
 																	
-																		<a class="cabanaclass" href="{{ path('cabana_detail', {'id': lote.cabana.id }) }}">
+																		<a class="cabanaclass" href="{{ path('cabana_detail', {'urlsegment': lote.cabana.urlsegment }) }}">
 																			<span>{{ lote.cabana.nombre }}</span>
 																		</a>
 																		{% else %}
@@ -86,9 +86,11 @@
 															</div>
 														</div>
 														
-															<div><a href="#" tabindex="0">
-																<p>Oferta Actual: - $</p>
-															    	</a>
+															<div>
+																<p style="height:54px"> 
+															     {{ lote.OferTextInfo }}
+																</p>
+															
 																</div>
 														<div class="prod-btn">
 															<a href="{{ path('lote_detail', {'id': lote.id }) }}">

@@ -1,5 +1,5 @@
 .lotendic{
-    color: #1b801b;
+    color: #7dbf3b;
     
 }
 
@@ -40,3 +40,69 @@ video-responsive {
     .ofertaform{
         border: 1px #e6f1e8 solid !important;
     }
+
+    .mypane{
+        overflow: hidden;
+        margin-bottom: 20px;
+        padding: 12px 20px;
+        border: 1px solid #dbdbdb;
+        background-color: #f6f6f6;
+    }
+    .slick-prev:before, .slick-next:before{
+        color:red;
+    }
+
+    #btnafiche{
+    border-color: #08c;
+    background: #08c;
+    /* width: 146% !important; */
+    margin-left: 23%;
+    }
+    #btncondpreofertas{
+        border-color: #e08700;
+        background: #e08700;
+        /* width: 164%; */
+        margin-left: 22%;
+    }
+    #btncatalogodescarga{
+        border-color: #ff675b;
+        background: #ff675b;
+        /* width: 121%; */
+        margin-left: 31%;
+
+    }
+
+    .btnrows{
+        color: #fff !important;       
+        border-radius: 2em !important;       
+        font-family: 'Raleway', sans-serif;
+        font-size: 16px !important;
+        width:fit-content;
+       
+      }
+
+      @media only screen and (max-width: 600px) {
+        #btnafiche{          
+             width: 146% !important; 
+            margin-left: -35% !important;
+            }
+            #btncondpreofertas{               
+                width: 164% !important;; 
+                margin-left: -40% !important;;       
+            }
+            #btncatalogodescarga{               
+                 width: 121% !important;; 
+                margin-left: -19% !important;;
+        
+            }
+            .container{
+                width: 100% !important;
+            }
+            .dex-a{
+                width: 153% !important;;
+                margin-left: -24% !important;;
+            }
+         
+      }
+
+     

@@ -1,0 +1,49 @@
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
+
+
+{% block page_title %}
+	Reporte
+{% endblock %}
+{% block page_subtitle %}
+	Pagina Principal
+{% endblock %}
+
+
+{% block page_content_before %}
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
+
+	<div class="example-wrapper">
+		<h4>Reporte ✅</h4>
+		<div class="row">
+			<div class="col-md-6">
+            <form  method="post" action="{{path('reporte_render')}}">
+				<div class="form-group">
+					<label class="control-label required" for="fechainicio">Fecha de Inicio</label>
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-calendar-alt"></i>
+						</div><input type="datetime-local" id="fechainicio" name="fechainicio" required="required" class="form-control"></div>
+					<label class="control-label required" for="fechafin">Fecha de Fin</label>
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-calendar-alt"></i>
+						</div><input type="datetime-local" id="fechafin" name="fechafin" required="required" class="form-control"></div>
+                         <br><div><button type="submit" class="btn btn-success">Generar</button></div>
+				</div>
+			  </div>
+             
+            </form>
+		</div>
+	</div>
+{% endblock %}

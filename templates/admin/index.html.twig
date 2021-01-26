@@ -1,6 +1,8 @@
 {% extends '@AdminLTE/layout/default-layout.html.twig' %}
 
-{% block page_title %}Page Title{% endblock %}
+
+{% block page_title %} Admin {% endblock %}
+{% block page_subtitle %}  Pagina Principal {% endblock %}
 
 
 {% block page_content_before %}
@@ -10,14 +12,7 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-
-    This friendly message is coming from:
-    <span>{{ is_granted('IS_AUTHENTICATED_FULLY') }}</span>
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/remates/src/Controller/AdminController.php'|file_link(0) }}">src/Controller/AdminController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/remates/templates/admin/index.html.twig'|file_link(0) }}">templates/admin/index.html.twig</a></code></li>
-    </ul>
+    <h1>Hola admin user! ✅</h1>
+  
 </div>
 {% endblock %}

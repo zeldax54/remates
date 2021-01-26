@@ -28,9 +28,21 @@
             {
                 return "" + row.fechacierre.date.substring(0, 20);
             },
+            "fecha": function(column, row)
+            {
+                return "" + row.fecha.date.substring(0, 20);
+            },
             "cabana": function(column, row)
             {
                 return row.cabana == null?"NO ASIGNADA":row.cabana.nombre;             
+            },
+            "toro": function(column, row)
+            {
+                return row.toro == null?"NO ASIGNADA":row.toro.nombre;             
+            },
+            "lote": function(column, row)
+            {
+                return row.lote == null?"NO ASIGNADo":row.lote.nombre;             
             },
         }
        }).on("loaded.rs.jquery.bootgrid", function()
