@@ -33,21 +33,13 @@
                 <td>{{ lote.nombre }}</td>
             </tr>
             <tr>
-                <th>PreOferta</th>
-                <td>{{ lote.info }}</td>
+             {% if lote.cabana is not null %}
+                <th>Cabaña</th>               
+                <td> {{lote.cabana.nombre}}</td>
+             {% endif %}
             </tr>
-            <tr>
-                <th>Condicionventa</th>
-                <td>{{ lote.condicionventa }}</td>
-            </tr>
-            <tr>
-                <th>Fechainicio</th>
-                <td>{{ lote.fechainicio ? lote.fechainicio|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Fechacierre</th>
-                <td>{{ lote.fechacierre ? lote.fechacierre|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
+          
+        
         </tbody>
     </table>
 

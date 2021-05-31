@@ -1,0 +1,11 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+
+
+{% block fos_user_content %}
+    Su usuario debe ser activado por un administrador.
+    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+    {% if targetUrl %}
+    <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
+    {% endif %}
+{% endblock fos_user_content %}

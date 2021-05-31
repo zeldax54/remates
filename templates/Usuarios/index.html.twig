@@ -1,0 +1,65 @@
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
+
+{% block title %}Lotes index{% endblock %}
+
+{% block page_title %} Toros {% endblock %}
+{% block page_subtitle %}  index {% endblock %}
+
+{% block page_content_before %}
+ <div class="row">
+    <div class="col-md-6 col-xs-6 tablecontainer">
+    <table id="grid-data" class="table table-condensed table-hover table-striped">
+        <thead>
+            <tr>         
+                <th data-column-id="username">Usernamere</th>    
+                <th data-column-id="email">Email</th>     
+                <th data-column-id="rol" data-formatter="rol">Rol</th>                  
+              <th data-column-id="commands" data-formatter="commands" data-sortable="false">Acciones </th>
+            </tr>
+        </thead>       
+    </table>
+ </div>
+    
+     </div>
+{% endblock %}
+
+ {% block customjavascripts %}
+    <script>
+     var grid = $("#grid-data").bootgrid({
+        ajax: true,
+        post: function ()
+        {
+            return {
+                entityName: 'User',
+                columnsName:['username'],
+                parentEntity:''
+    
+            };
+        },
+        url: Routing.generate('generictable'),
+        formatters: {
+            "commands": function(column, row)
+            {
+                 return "<a href= '" + Routing.generate('makeadmin', {id: row.id}) + "'><button title=\" Activar admin \" type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-check\"></span></button></a> " + 
+                       "<a href= '" + Routing.generate('removeadmin', {id: row.id}) + "'> <button title=\" Desactivar admin \" type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash\"></span></button></a>";                 
+                
+                     
+            } ,
+            "rol": function(column, row)
+            {
+                return "" + row.roles[0];
+            },         
+        }
+       }).on("loaded.rs.jquery.bootgrid", function()
+      {
+        /* Executes after data is loaded and rendered */
+        grid.find(".command-edit").on("click", function(e)
+        {
+           
+        }).end().find(".command-delete").on("click", function(e)
+        {
+            
+        });
+       });
+    </script>
+ {% endblock %}

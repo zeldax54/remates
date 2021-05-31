@@ -28,21 +28,27 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
         $toro = new MenuItemModel('toroId', 'Toros', 'toro_index', [], 'fas fa-book-open');
         $lote = new MenuItemModel('loteId', 'Lotes', 'lote_index', [], 'fas fa-book-open');
         $cabana = new MenuItemModel('cabanaId', 'Cabañas', 'cabana_index', [], 'fas fa-book-open');
+
+        $users = new MenuItemModel('usersId', 'Usuarios', 'usuarios_index', [], 'fas fa-book-open');
       
         $salidas = new MenuItemModel('salidaId', 'Salidas', 'index_admin', [], 'fa fa-folder-open text-blue');      
         $ofertas = new MenuItemModel('ofertaId', 'Ofertas', 'oferta_index', [], 'fa-money');
         $reporte = new MenuItemModel('reporteId', 'Reporte', 'reporte_index', [], 'fa-money');
+      
 
         $salidas->addChild($ofertas);
         $salidas->addChild($reporte);
-
+        
+      
 
         
         $event->addItem($blog);
         $event->addItem($toro);
         $event->addItem($lote);
         $event->addItem($cabana);
+        $event->addItem($users);
         $event->addItem($salidas);
+        
         
 
         $this->activateByRoute(
