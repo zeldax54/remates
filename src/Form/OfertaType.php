@@ -30,6 +30,7 @@ class OfertaType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Oferta::class,
+            'csrf_protection' => false,
         ]);
     }
 }

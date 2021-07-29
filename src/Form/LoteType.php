@@ -69,6 +69,7 @@ class LoteType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Lote::class,
+            'csrf_protection' => false,
         ]);
     }
 }

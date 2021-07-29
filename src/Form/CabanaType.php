@@ -132,6 +132,7 @@ class CabanaType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Cabana::class,
+            'csrf_protection' => false,
         ]);
     }
 }
