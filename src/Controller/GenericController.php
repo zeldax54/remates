@@ -230,22 +230,24 @@ class GenericController extends AbstractController
                 'image4' => $image4,
                 'image5' => $image5,
             ));
-            $this->sendMail('Info Oferta',$from,$from,$html,$mailer);        
+            $adminmail = $this->getParameter('mailer_admin');
+            $this->sendMail('Info Oferta',$adminmail,$from,$html,$mailer);        
 
             $result = array(
-                'msj'=>'Oferta enviada con exito! Hemos enviado un email de confirmacón.',
+                'msj'=>'Oferta enviada con exito! Hemos enviado un email de confirmacion.',
                 'newValue' => $oferta+$lotebd->getIncrementominimo(),
                 'st'=>'ET'//exito
             );          
             return new JsonResponse($result);
         } catch (\Exception $e) {
-            $emessage = (new Email())->subject('Error en el sistema de ofertas')->to($email);
+            $adminmail = $this->getParameter('mailer_admin');
+            $emessage = (new Email())->subject('Error en el sistema de ofertas')->to($adminmail);
             $from = $this->getParameter('mailer_user');
             $emessage->from($from);
             $emessage->html($e->getMessage().' .Linea:'.$e->getLine(), 'text/plain');
             $mailer->send($emessage);
             $result = array(
-                'msj'=>'hemos detectado un error en el sistema, nuestros especialistas serán alertados automaticamente. Le sugerimos intentar mas tarde.',
+                'msj'=>'Hemos detectado un error en el sistema, nuestros especialistas seran alertados automaticamente. Le sugerimos intentar mas tarde.',
                 'newValue' => 0,
                 'st'=>'ERR'//error
             );

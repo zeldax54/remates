@@ -1,5 +1,6 @@
 parameters:
-    mailer_user: user@sitio.com
+    mailer_user: sistemaofertas@noreply.com
+    mailer_admin: zeldax54@gmail.com
     sender_name: systemadin
     secret: secrettoken12345
 
