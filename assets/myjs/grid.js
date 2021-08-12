@@ -44,6 +44,17 @@
             {
                 return row.lote == null?"NO ASIGNADo":row.lote.nombre;             
             },
+            "status": function(column, row)
+            {
+                switch (row.status){
+                    case "A":
+                        return "Aceptada";                     
+                    case "S":
+                       return "Superada";                      
+                    case "R":
+                       return "Rechazada";
+                }             
+            },
         }
        }).on("loaded.rs.jquery.bootgrid", function()
       {

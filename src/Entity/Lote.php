@@ -248,9 +248,14 @@ class Lote
         foreach($this->toros as $toro)
         {
             $ofertaActual = $toro->getOfertaActual();
-            $info.=$toro->getNombre().':';
-            $info.= $ofertaActual > 0 ? $ofertaActual:'-';
-            $info.='|';
+            if($ofertaActual>0)
+            {
+                $info.='<strong>'.$toro->getNombre().'</strong>:';
+                $info.=$toro->getPreciobase().'/';
+                $info.= $ofertaActual > 0 ? $ofertaActual:'-';
+                $info.='<br>';
+            }
+           
         }
         return $info;
     }

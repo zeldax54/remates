@@ -23,6 +23,29 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class GenericController extends AbstractController
 {
+
+    /**
+     * @Route("/offerhistory", name="offerhistory",options={"expose"= true}, methods={"POST"})
+     */
+    public function GetOfferHistory(Request $request)
+    {
+        $toroid = $request->request->get('toroid');
+        $ofertas  = $this->getDoctrine()->getRepository(Oferta::class)->findBy(
+            array('toro'=>$toroid),
+            array('fecha' => 'desc')
+        );
+        $info='';
+        foreach($ofertas as $o){
+            $info.=$o->getOfertado().' / '.$o->getFecha()->format('d-m-Y H:i:s')."\r\n";
+        }
+
+        return new JsonResponse(
+           array('data'=>$info)
+        );
+    }
+
+
+
     /**
      * @Route("/admin/generictable", name="generictable")
      */
@@ -198,8 +221,8 @@ class GenericController extends AbstractController
             $image3 = $request->getUriForPath('/uploads/genericsimages/image-3.png');
             $image4 = $request->getUriForPath('/uploads/genericsimages/image-4.png');
             $image5 = $request->getUriForPath('/uploads/genericsimages/image-5.png');
-            $cabeceramsjcliente = '<span class="spanmsj"> Hemos registrado una oferta desde su email que esta siendo revisada, a continuación los detalles:</span><br>';
-            $footermsjcliente = '<span class="spanmsj">Recibirá un email similar cuando la oferta sea aprobada o rechazada</span>';
+            $cabeceramsjcliente = '<span class="spanmsj"> Hemos registrado una oferta desde su email que esta siendo revisada, a continuacion los detalles:</span><br>';
+            $footermsjcliente = '<span class="spanmsj">Recibira un email similar cuando la oferta sea aprobada o rechazada</span>';
             $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
                 'mensaje' => $cabeceramsjcliente . $ofermsj . $footermsjcliente,
                 'nombre' => $nombre,
@@ -277,7 +300,7 @@ class GenericController extends AbstractController
         $image4 = $request->getUriForPath('/uploads/genericsimages/image-4.png');
         $image5 = $request->getUriForPath('/uploads/genericsimages/image-5.png');
         $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido Rechazada, detalles:</span><br>';
-        $ofertaHtml = $this->GethtmlOder($ofer);
+        $ofertaHtml = $this->GethtmlOder($ofer);      
         $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
             'mensaje' => $cabeceramsjcliente . $ofertaHtml,
             'nombre' => $ofer->getNombre(),
@@ -341,11 +364,15 @@ class GenericController extends AbstractController
       
         if(count($lastOfer)>1){
            $prevOfer = $lastOfer[1];
-           $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido superada :<strong>'.
-           $ofer->getToro()->getNombre().'</strong> Lote:'. $ofer->getLote()->getNombre().' Nueva Oferta:'.
+           $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido superada :<br>'.
+           'Toro:'.$ofer->getToro()->getNombre().'<br> Lote:'. $ofer->getLote()->getNombre().'<br> Nueva Oferta:'.
            $ofer->getOfertado().'</span><br>';
+           $newofertaUrl = $this->generateUrl('lote_detail', array(
+               'id' => $ofer->getLote()->getId()),
+                UrlGeneratorInterface::ABSOLUTE_URL);
+           $newoferta ='<br><span>Click <a href="'.$newofertaUrl.'"> aqui</a> para hacer una nueva oferta<a>';
            $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
-               'mensaje' => $cabeceramsjcliente,
+               'mensaje' => $cabeceramsjcliente.$newoferta,
                'nombre' => $prevOfer->getNombre(),
                'image1' => $image1,
                'image2' => $image2,
@@ -353,11 +380,18 @@ class GenericController extends AbstractController
                'image4' => $image4,
                'image5' => $image5,
            ));
+           //set offert superada
+           $prevOfer->setStatus('S');
+           $entityManager = $this->getDoctrine()->getManager();
+           $entityManager->persist($prevOfer);             
+           $entityManager->flush();
+           //
            $from = $this->getParameter('mailer_user');
            $email = $prevOfer->getEmail();
            $this->sendMail('Info Oferta',$email,$from,$html,$mailer);
+           
         }
-       return new JsonResponse('Oferta Aceptada. Se ha notificado al cliente y a la oferta previa de su rechazo');
+        return new JsonResponse('Oferta Aceptada. Se ha notificado al cliente y a la oferta previa de su rechazo');
 
     }
 
@@ -375,7 +409,8 @@ class GenericController extends AbstractController
         return $qb->getQuery()->getResult();
     }
 
-    private function sendMail($subjet,$toEmail,$from,$html,$mailer){
+    private function sendMail($subjet,$toEmail,$from,$html,$mailer)
+    {
         $emessage = (new Email())->subject($subjet)->to($toEmail);
         $from = $this->getParameter('mailer_user');
         $emessage->from($from);
@@ -408,4 +443,6 @@ class GenericController extends AbstractController
     return $ofermsj;
 
    }
+
+
 }

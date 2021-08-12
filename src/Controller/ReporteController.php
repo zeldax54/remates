@@ -12,6 +12,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Cabana;
 use DateTime;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ReporteController extends AbstractController
 {
@@ -20,8 +21,12 @@ class ReporteController extends AbstractController
      */
     public function reporteIndex(): Response
     {
+        $reporturl = $this->generateUrl('reporte_render', array(),
+             UrlGeneratorInterface::ABSOLUTE_URL);
 
-        return $this->render('admin/reporte.html.twig', []);
+        return $this->render('admin/reporte.html.twig', array(
+       'reportUrl'=>$reporturl
+        ));
     }
 
     /**
@@ -31,6 +36,8 @@ class ReporteController extends AbstractController
     {
         $fechaInicio = $request->request->get('fechainicio');
         $fechafin = $request->request->get('fechafin');
+        $agrupar = strtolower($request->request->get('agrupar')) === 'yes';
+      
         $cabanas = $this->getDoctrine()->getRepository(Cabana::class)->findAll();
 
         $sheetIter = 0;
@@ -47,12 +54,23 @@ class ReporteController extends AbstractController
             ->leftJoin("L.cabana","C")
             ->where("O.fecha >='" . $fechaInicio . "'")
             ->andWhere("O.fecha <='" . $fechafin . "'")
-            ->andWhere("C.nombre ='" . $cabana->getNombre(). "'")          
-            ->orderBy('O.id', 'DESC');
+            ->andWhere("C.id ='" . $cabana->getId(). "'");      
+               
+            if($agrupar == true)            
+                $qb->orderBy('T.id') ->addOrderBy('O.fecha', 'DESC');                          
+            else            
+                $qb->orderBy('O.id');
+            
+                
+
+           
 
             $ofertas = $qb->getQuery()->getArrayResult();
-            if(count($ofertas)>0){
-                $objWorkSheet = $objPHPExcel->createSheet($sheetIter);
+          //  print(count($ofertas));
+         
+            if(count($ofertas)>0)
+            {
+            $objWorkSheet = $objPHPExcel->createSheet($sheetIter);
             $objPHPExcel->setActiveSheetIndex($sheetIter);
             $objPHPExcel->getActiveSheet()->setTitle(substr($cabana->getNombre(),0,30));
             //Write cells
@@ -67,12 +85,27 @@ class ReporteController extends AbstractController
                  ->setCellValue('G1', 'Telefono')
                  ->setCellValue('H1', 'Estado')
                  ->setCellValue('I1', 'Fecha')
-                 ->setCellValue('J1', 'Cantidad Ofertada') ;
+                 ->setCellValue('J1', 'Cantidad Ofertada');
                  $this->Colorear( $objPHPExcel,array('A','B','C','D','E','F','G','H','I','J'),1);
 
                  $inneriter = 2;
                  foreach($ofertas as $o){      
-                    
+             
+                    $status ='';
+                  switch ($o['status']) {
+                      case 'S':
+                        $status = 'Superada';
+                      break;   
+
+                      case 'A':
+                        $status = 'Aceptada';
+                      break;     
+
+                      case 'R':
+                        $status = 'Rechazada';
+                      break;                        
+                  }
+
                   $objWorkSheet ->setCellValue('A'.$inneriter, $o['lote']['nombre']);
                   $objWorkSheet ->setCellValue('B'.$inneriter, $o['toro']['nombre']);
                   $objWorkSheet ->setCellValue('C'.$inneriter, $o['nombre']);
@@ -80,9 +113,25 @@ class ReporteController extends AbstractController
                   $objWorkSheet ->setCellValue('E'.$inneriter, $o['dnicuit']);
                   $objWorkSheet ->setCellValue('F'.$inneriter, $o['email']);
                   $objWorkSheet ->setCellValue('G'.$inneriter, $o['telefono']);
-                  $objWorkSheet ->setCellValue('H'.$inneriter, $o['status']);
+                  $objWorkSheet ->setCellValue('H'.$inneriter, $status);
                   $objWorkSheet ->setCellValue('I'.$inneriter, $o['fecha']->format('d-m-Y H:i:s'));
                   $objWorkSheet ->setCellValue('J'.$inneriter, $o['ofertado']);
+                
+                  if($agrupar == true && $inneriter > 2 && $o['toro']['id']!= $ofertas[$inneriter-2-1]['toro']['id'] )
+                  {
+                    $objWorkSheet ->setCellValue('A'.$inneriter, '');
+                    $objWorkSheet ->setCellValue('B'.$inneriter, '');
+                    $objWorkSheet ->setCellValue('C'.$inneriter, '');
+                    $objWorkSheet ->setCellValue('D'.$inneriter, '');
+                    $objWorkSheet ->setCellValue('E'.$inneriter, '');
+                    $objWorkSheet ->setCellValue('F'.$inneriter, '');
+                    $objWorkSheet ->setCellValue('G'.$inneriter, '');
+                    $objWorkSheet ->setCellValue('H'.$inneriter, '');
+                    $objWorkSheet ->setCellValue('I'.$inneriter, '');
+                    $objWorkSheet ->setCellValue('J'.$inneriter, '');
+                  }
+                 
+                  $inneriter++;
 
                  }          
                 
@@ -91,6 +140,7 @@ class ReporteController extends AbstractController
             }
           
         }
+      
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 

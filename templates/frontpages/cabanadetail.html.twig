@@ -1,139 +1,209 @@
 {% extends 'frontpages/front_layout.html.twig' %}
 
 {% block customstyles %}
-	<style>
-	 .container{
-          width: 70% !important;
-      }
-	</style>
+<style>
+	.container {
+		width: 70% !important;
+	}
+</style>
 {% endblock %}
 {% block pagecontent %}
 
-	<div class="page-content-product">
+<div class="page-content-product">
 
-		<div class="container">
+	<div class="container">
 
 		<div class="row d-flex justify-content-center mt-100">
-    <div class="col-md-12">
-        <div class="card">
-            
-            <div class="card-block text-center">
-             {% for logo in cabana.logos %}		
-					
-				<img src="{{ asset('uploads/Cabana/Logo/gallery/' ~ logo ) }}" alt="{{cabana.nombre}}" title="{{cabana.nombre}}"/>			
-				{% endfor %}
-            </div>
-        </div>
-    </div>
-</div>
+			<div class="col-md-12">
+				<div class="card">
 
+					<div class="card-block text-center">
+						{% for logo in cabana.logos %}
 
-
-			<div class="row">
-
-				<div class="left-profile-box-m prod-page"></div>
-			</div>
-			<div class="col-md-6 col-sm-12 col-xs-12">
-				<div class="md-prod-page">
-
-					<div class="description-box">
-						<div class="dex-a">
-							<h4>{{ cabana.nombre }}</h4>
-							{{ cabana.descripcion | raw }}
-
-						</div>
-
+						<img src="{{ asset('uploads/Cabana/Logo/gallery/' ~ logo ) }}" alt="{{cabana.nombre}}"
+							title="{{cabana.nombre}}" />
+						{% endfor %}
 					</div>
 				</div>
+			</div>
+		</div>
 
 
+
+		<div class="row">
+
+			<div class="left-profile-box-m prod-page"></div>
+		</div>
+		<div class="col-md-6 col-sm-12 col-xs-12">
+			<div class="md-prod-page">
+
+				<div class="description-box">
+					<div class="dex-a">
+						<h4>{{ cabana.nombre }}</h4>
+						{{ cabana.descripcion | raw }}
+
+					</div>
+
+				</div>
 			</div>
 
-			{# Botones #}
 
-			<div class="col-md-6 col-sm-12 col-xs-12" style="    margin-top: 44px;">
-				<div class="md-prod-page-in">
-					<div class="page-preview">
+		</div>
 
-						<div class="preview">
+		{# Botones #}
 
-							<div class="your-class">
-								{% for g in cabana.gallery %}
-									<div><img src="{{ asset('uploads/Cabana/Gallery/gallery/' ~ g ) }}" alt="#"></div>
-								{% endfor %}
+		<div class="col-md-6 col-sm-12 col-xs-12" style="    margin-top: 44px;">
+			<div class="md-prod-page-in">
+				<div class="page-preview">
+
+					<div class="preview">
+
+						<div class="your-class">
+							{% for g in cabana.gallery %}
+							<div><img src="{{ asset('uploads/Cabana/Gallery/gallery/' ~ g ) }}" alt="#"></div>
+							{% endfor %}
 
 
-								{% for v in cabana.videos|split(';') %}
-									<div>
-										<iframe width="600" height="400" src="https://www.youtube.com/embed/{{v}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-									</div>
-								{% endfor %}
-
+							{% for v in cabana.videos|split(';') %}
+							<div>
+								<iframe width="600" height="400" src="https://www.youtube.com/embed/{{v}}"
+									frameborder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+									allowfullscreen></iframe>
 							</div>
+							{% endfor %}
+
 						</div>
 					</div>
-					
-				</div>
-				<div class="price-box-right" style="vertical-align:middle;">
-					{% if cabana.afiche is not null %}
-						<a class="btnrows" id="btnafiche" href="{{ cabana.afiche}}">
-							&ensp;&ensp;&ensp;<span class="glyphicon glyphicon-calendar"></span>&ensp;AFICHE/DETALLES DEL EVENTO&ensp;&ensp;&ensp;</a>
-					{% endif %}
-					{% if cabana.condpreofertas is not null %}
-						<a class="btnrows" id="btncondpreofertas" href="{{ cabana.condpreofertas }}">
-							&ensp;&ensp;&ensp;<span class="fa fa-handshake-o"></span>&ensp;CONDICIONES DE LAS PREOFERTAS&ensp;&ensp;&ensp;
-						</a>
-					{% endif %}
-					{% if cabana.catalogdescarga is not null %}
-						<a class="btnrows" id="btncatalogodescarga" href="{{ cabana.catalogdescarga }}">
-							&ensp;&ensp;&ensp;<span class="fa fa-book"></span>&ensp;DESCARGAR CATALOGO&ensp;&ensp;&ensp;</a>
-					{% endif %}
 				</div>
 
 			</div>
-			
-				<div class="similar-box">
-					<h2>Lotes en venta | Pre-ofertas
-					</h2>
-					<div class="row cat-pd">
+			<div class="price-box-right" style="vertical-align:middle;">
+				{% if cabana.afiche is not null %}
+				<a class="btnrows" id="btnafiche" href="{{ cabana.afiche}}">
+					&ensp;&ensp;&ensp;<span class="glyphicon glyphicon-calendar"></span>&ensp;AFICHE/DETALLES DEL
+					EVENTO&ensp;&ensp;&ensp;</a>
+				{% endif %}
+				{% if cabana.condpreofertas is not null %}
+				<a class="btnrows" id="btncondpreofertas" href="{{ cabana.condpreofertas }}">
+					&ensp;&ensp;&ensp;<span class="fa fa-handshake-o"></span>&ensp;CONDICIONES DE LAS
+					PREOFERTAS&ensp;&ensp;&ensp;
+				</a>
+				{% endif %}
+				{% if cabana.catalogdescarga is not null %}
+				<a class="btnrows" id="btncatalogodescarga" href="{{ cabana.catalogdescarga }}">
+					&ensp;&ensp;&ensp;<span class="fa fa-book"></span>&ensp;DESCARGAR CATALOGO&ensp;&ensp;&ensp;</a>
+				{% endif %}
+			</div>
 
-						{% for lote in cabana.lotes %}
-							{% if lote.desactivado == false or lote.desactivado is null %}
-								<div class="col-md-3">
-									<div class="small-box-c">
-										<div class="small-img-b">
-											<a href="{{ path('lote_detail', {'id': lote.id}) }}"><img class="img-responsive" src="{{ asset('uploads/Lote/gallery/' ~ lote.gallery|first ) }}" alt="#"/></a>
-										</div>
-										<div class="dit-t clearfix">
-											<div class="left-ti">
-												<h4>{{ lote.nombre }}</h4>
-												{# <p>By
+		</div>
+
+		<div class="similar-box">
+			<h2>Lotes en venta | Pre-ofertas
+			</h2>
+			<div class="panel-heading clearfix">
+
+				<ul class="nav nav-tabs pull-left left-t">
+					<li class="dropdown">
+						<form>
+							<select id="razasfilter" class="selectpicker">
+								<option value="-1">Todas las razas</option>
+								{% for r in razas %}
+								<option value={{r.nombre|replace({' ': ''}) }}>{{r.nombre}}</option>
+								{% endfor %}
+							</select>
+						</form>
+					</li>
+					<li class="dropdown">
+						<form>
+							<select id="categoriasfilter" class="selectpicker">
+								<option value="-1">Todas las categorías</option>
+								{% for c in categorias %}
+								<option value={{c.nombre|replace({' ': ''})}}>{{c.nombre}}</option>
+								{% endfor %}
+							</select>
+						</form>
+					</li>
+				</ul>
+			</div>
+			<div class="row cat-pd">
+
+				{% for lote in cabana.lotes %}
+				{% if lote.desactivado == false or lote.desactivado is null %}
+				<div class="col-md-3 {% if lote.raza is not null %}{{lote.raza.nombre|replace({' ': ''})}}{% endif %} {% if lote.categoria is not null %}{{lote.categoria.nombre|replace({' ': ''})}}{% endif %} allvisible">
+					<div class="small-box-c">
+						<div class="small-img-b">
+							<a href="{{ path('lote_detail', {'id': lote.id}) }}"><img class="img-responsive"
+									src="{{ asset('uploads/Lote/gallery/' ~ lote.gallery|first ) }}" alt="#" /></a>
+						</div>
+						<div class="dit-t clearfix">
+							<div class="left-ti">
+								<h4>{{ lote.nombre }}</h4>
+								{# <p>By
 																									<span>Beko</span>
 																									under
 																									<span>Chairs</span>
 																								</p> #}
-											</div>
-										</div>
-										<div class="prod-btn">
-											<a href="{{ path('lote_detail', {'id': lote.id}) }}">
-												<i class="" aria-hidden="true"></i>
-												Hacer preoferta</a>
-											<p>{{ lote.toros|length }}
-												Toros</p>
-										</div>
+							</div>
+						</div>
 
-									</div>
-								</div>
-							{% endif %}
-						{% endfor %}
+						<div>
+							<p style="height:54px">
+								{{ lote.OferTextInfo|raw }}
+							</p>
+
+						</div>
+
+						<div class="prod-btn">
+							<a href="{{ path('lote_detail', {'id': lote.id}) }}">
+								<i class="" aria-hidden="true"></i>
+								Hacer preoferta</a>
+							<p>{{ lote.toros|length }}
+								Toros</p>
+						</div>
+
 					</div>
-
 				</div>
-
-
-			{# Botones End #}
-
+				{% endif %}
+				{% endfor %}
+			</div>
 
 		</div>
+
+
+		{# Botones End #}
+
+
 	</div>
-</div>{% endblock %}{% block customjavascripts %}{% endblock %}
+</div>
+</div>{% endblock %}
+{% block customjavascripts %}
+<script>
+	$(".selectpicker").change(function () {
+		var raza = $("#razasfilter").val();
+		var categoria = $("#categoriasfilter").val();
+		$('.allvisible').hide();
+		if(raza != "-1" && categoria != "-1")
+		{
+		  $('.'+raza+'.'+categoria).show();
+			
+		}
+		else if(raza != "-1" && categoria == "-1")
+		{
+			$('.'+raza).show();
+		}
+		else if(categoria != "-1" && raza == "-1")
+		{
+			$('.'+categoria).show();
+		}
+		else  if(categoria == "-1" && raza == "-1"){
+			$('.allvisible').show();
+		}
+		
+
+		
+
+	});
+</script>
+
+{% endblock %}

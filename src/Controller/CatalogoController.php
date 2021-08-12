@@ -42,8 +42,12 @@ class CatalogoController extends AbstractController
     public function cabanaDetail($urlsegment): Response
     {  
         $cabana = $this->getDoctrine()->getRepository(Cabana::class)->findOneBy(['urlsegment' => $urlsegment]);
+        $razas = $this->getDoctrine()->getRepository(Razas::class)->findAll();       
+        $categorias = $this->getDoctrine()->getRepository(Categoria::class)->findAll();
         return $this->render('frontpages/cabanadetail.html.twig', [
             'cabana' => $cabana,
+            'razas'=>$razas,            
+            'categorias'=>$categorias
         ]);
     }
 

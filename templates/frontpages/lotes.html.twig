@@ -45,7 +45,7 @@
 									<li class="dropdown">
 										<form>
 											<select id="cabanasfilter" class="selectpicker">
-												<option value="-1">Todas las cabaña</option>
+												<option value="-1">Todas las cabañas</option>
 												{% for c in cabanas %}
 													<option value={{c.id}}>{{c.nombre}}</option>
 												{% endfor %}
@@ -88,7 +88,7 @@
 														
 															<div>
 																<p style="height:54px"> 
-															     {{ lote.OferTextInfo }}
+															     {{ lote.OferTextInfo|raw }}
 																</p>
 															
 																</div>

@@ -27,19 +27,28 @@
 		<h4>Reporte ✅</h4>
 		<div class="row">
 			<div class="col-md-6">
-            <form  method="post" action="{{path('reporte_render')}}">
+            <form  method="post" action="{{reportUrl}}">
 				<div class="form-group">
 					<label class="control-label required" for="fechainicio">Fecha de Inicio</label>
 					<div class="input-group">
 						<div class="input-group-addon">
 							<i class="fa fa-calendar-alt"></i>
-						</div><input type="datetime-local" id="fechainicio" name="fechainicio" required="required" class="form-control"></div>
+						</div><input type="datetime-local" id="fechainicio" name="fechainicio" required="required" class="form-control">
+					</div>
 					<label class="control-label required" for="fechafin">Fecha de Fin</label>
 					<div class="input-group">
 						<div class="input-group-addon">
 							<i class="fa fa-calendar-alt"></i>
-						</div><input type="datetime-local" id="fechafin" name="fechafin" required="required" class="form-control"></div>
-                         <br><div><button type="submit" class="btn btn-success">Generar</button></div>
+						</div><input type="datetime-local" id="fechafin" name="fechafin" required="required" class="form-control">
+					</div>
+
+					<br>
+					<label class="control-label required" for="agrupar">Agrupar</label>
+					<div class="input-group">										
+						</div><input type="checkbox" id="agrupar" name="agrupar" value="yes" >
+					</div>
+                         <br><div><button type="submit" class="btn btn-success">Generar</button>
+						</div>
 				</div>
 			  </div>
              
