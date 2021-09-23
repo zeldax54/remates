@@ -152,7 +152,7 @@ class ReporteController extends AbstractController
         
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         
-        ob_end_clean();
+        if (ob_get_length()) ob_end_clean();
         $objWriter->save('php://output');
         
         
