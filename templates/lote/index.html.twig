@@ -12,7 +12,8 @@
         <thead>
             <tr>               
                 <th data-column-id="nombre" >Nombre</th>
-                <th data-column-id="cabana" data-formatter="cabana">Cabaña</th>              
+                <!-- <th data-column-id="cabana" data-formatter="cabana">Evento</th> -->  
+                <th data-column-id="cabanaentity" data-formatter="cabanaentity">Cabaña</th>             
                 <th data-column-id="commands" data-formatter="commands" data-sortable="false">Acciones </th>
             </tr>
         </thead>
@@ -25,6 +26,6 @@
 
  {% block customjavascripts %}
     <script>
-      InitializaGrid('grid-data','Lote',["nombre"],"cabana");
+      InitializaGrid('grid-data','Lote',["nombre","cabanaentity"],"cabanaentity");
     </script>
  {% endblock %}

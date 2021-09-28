@@ -9,7 +9,7 @@
 		<div class="container">
 			<div class="row">
 
-				<div class="col-md-10 col-sm-8">
+				<div class="col-md-12 col-sm-12">
 					<div class="profile-pro-right">
 						<div class="panel with-nav-tabs panel-default">
 							<div class="panel-heading clearfix">
@@ -24,7 +24,7 @@
 								<ul class="nav nav-tabs pull-right right-t">
 									<li class="dropdown">
 										<form>
-											<select id="razasfilter" class="selectpicker">
+											<select id="razasfilter" class="selectpicker detailselectlote">
 												<option value="-1">Todas las razas</option>
 												{% for r in razas %}
 													<option value={{r.id}}>{{r.nombre}}</option>
@@ -34,7 +34,7 @@
 									</li>
 									<li class="dropdown">
 										<form>
-											<select id="categoriasfilter" class="selectpicker">
+											<select id="categoriasfilter" class="selectpicker detailselectlote">
 												<option value="-1">Todas las categorías</option>
 												{% for c in categorias %}
 													<option value={{c.id}}>{{c.nombre}}</option>
@@ -44,9 +44,19 @@
 									</li>
 									<li class="dropdown">
 										<form>
-											<select id="cabanasfilter" class="selectpicker">
-												<option value="-1">Todas las cabañas</option>
+											<select id="cabanasfilter" class="selectpicker detailselectlote">
+												<option value="-1">Todas los Eventos</option>
 												{% for c in cabanas %}
+													<option value={{c.id}}>{{c.nombre}}</option>
+												{% endfor %}
+											</select>
+										</form>
+									</li>
+									<li class="dropdown">
+										<form>
+											<select id="cabanasentityfilter" class="selectpicker detailselectlote">
+												<option value="-1">Todas las Cabañas</option>
+												{% for c in cabanasentities %}
 													<option value={{c.id}}>{{c.nombre}}</option>
 												{% endfor %}
 											</select>
@@ -60,7 +70,7 @@
 										<div id="lotescontainer" class="product-box-main row">
 
 											{% for lote in lotes %}
-												<div class="col-md-4 col-sm-6">
+												<div class="col-md-4 col-sm-6 allvisible" name="{{lote.id}}">
 													<div class="small-box-c">
 														<div class="small-img-b">
 															{% if lote.gallery|length > 0 %}

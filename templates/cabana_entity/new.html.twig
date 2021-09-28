@@ -1,0 +1,17 @@
+{% extends '@AdminLTE/layout/default-layout.html.twig' %}
+
+{% block page_title %} Cabaña {% endblock %}
+{% block page_subtitle %}  Nueva {% endblock %}
+
+{% block page_content_before %}
+     <div class="marker">
+
+    {{ include('cabana_entity/_form.html.twig') }}
+
+    <a class="backlist" href="{{ path('cabana_entity_index') }}">lista de cabañas</a>
+    
+    </div>
+{% endblock %}
+{% block customjavascripts %}
+{% include "ComurImageBundle:Form:croppable_image_modal.html.twig" with {'include_fontawesome': false, 'include_jquery': false, 'include_bootstrap': false, 'bootstrap_version': 4} %}
+{% endblock %}

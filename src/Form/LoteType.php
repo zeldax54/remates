@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Cabana;
 use App\Entity\Lote;
 use App\Entity\Toro;
 use Symfony\Component\Form\AbstractType;
@@ -53,7 +54,12 @@ class LoteType extends AbstractType
             )
         ))
             ->add('nombre')
-            ->add('cabana')
+            ->add('cabana',null,[
+                'label'=>'Evento',                
+                ] )     
+                ->add('cabanaentity',null,[
+                    'label'=>'Cabaña',                
+                    ] )   
             ->add('categoria')
             ->add('raza')       
             ->add('incrementominimo',IntegerType::class,[

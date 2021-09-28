@@ -27,7 +27,8 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
 
         $toro = new MenuItemModel('toroId', 'Toros', 'toro_index', [], 'fas fa-book-open');
         $lote = new MenuItemModel('loteId', 'Lotes', 'lote_index', [], 'fas fa-book-open');
-        $cabana = new MenuItemModel('cabanaId', 'Cabañas', 'cabana_index', [], 'fas fa-book-open');
+        $cabana = new MenuItemModel('cabanaId', 'Eventos', 'cabana_index', [], 'fas fa-book-open');
+        $cabanaentity = new MenuItemModel('cabanaEntityId', 'Cabañas', 'cabana_entity_index', [], 'fas fa-book-open');
 
         $users = new MenuItemModel('usersId', 'Usuarios', 'usuarios_index', [], 'fas fa-book-open');
       
@@ -46,6 +47,8 @@ class MenuBuilderSubscriber implements EventSubscriberInterface
         $event->addItem($toro);
         $event->addItem($lote);
         $event->addItem($cabana);
+        $event->addItem($cabanaentity);
+
         $event->addItem($users);
         $event->addItem($salidas);
         

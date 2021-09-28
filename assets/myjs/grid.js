@@ -44,6 +44,10 @@
             {
                 return row.lote == null?"NO ASIGNADo":row.lote.nombre;             
             },
+            "cabanaentity": function(column, row)
+            {            
+               return row.cabanaentity == null?"Sin Cabaña":row.cabanaentity.nombre;             
+            },
             "status": function(column, row)
             {
                 switch (row.status){

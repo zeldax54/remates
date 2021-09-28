@@ -38,15 +38,18 @@ $(document).ready(function () {
   });
 });
 
-$(".selectpicker").change(function () {
+$(".detailselectlote").change(function () {
   var raza = $("#razasfilter").val();
   var categoria = $("#categoriasfilter").val();
   var cabana = $("#cabanasfilter").val();
+  var cabanasentity = $("#cabanasentityfilter").val();
+  
 
   var datos = {
     raza: raza,
     categoria: categoria,
     cabana: cabana,
+    cabanasentity:cabanasentity    
   };
 
   $.ajax({
@@ -54,41 +57,12 @@ $(".selectpicker").change(function () {
     url: Routing.generate("filterlotes"),
     data: datos,
   })
-    .done(function (data) {
-      $("#countholder").html(Object.keys(data).length);
-      $("#lotescontainer").html("");
-      data.forEach(function (obj) {       
-        let div =
-          '<div class="col-md-4 col-sm-6">' +
-          '<div class="small-box-c"><div class="small-img-b">' +
-          '<a href="' +
-          Routing.generate("lote_detail", { id: obj.id }) +
-          '" ><img src="' +
-          getImgPrinc(obj) +
-          '" alt="' +
-          obj.nombre +
-          '" /></a>' +
-          "</div>" +
-          '<div class="dit-t clearfix">' +
-          '<div class="left-ti">' +
-          "<h4>" +
-          obj.nombre +
-          "</h4>" +
-          "<p>" +
-          getCabanaName(obj) +
-          "</p>" +
-          "</div>" + 
-          "</div>" +
-          '<div><p style="height:54px">'+obj.oferInfo+'</p></div>' +
-          '<div class="prod-btn">' +
-          '<a href="' +
-          Routing.generate("lote_detail", { id: obj.id }) +
-          '"><i class="" aria-hidden="true"></i> Hacer Pre-Oferta</a>' +
-          "</div>" +
-          "</div>" +
-          "</div>";
-        let existence = $("#lotescontainer").html();
-        $("#lotescontainer").html(existence + div);
+    .done(function (response) {
+      $("#countholder").html(response.data.length);
+      $('.allvisible').hide();				
+      response.data.forEach(function (obj) {
+        $('div[name="' + obj + '"]').show();
+      
       });
 
       // console.log(data);

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Cabana;
+use App\Entity\CabanaEntity;
 use App\Entity\Categoria;
 use App\Entity\Lote;
 use App\Entity\Razas;
@@ -44,10 +45,13 @@ class CatalogoController extends AbstractController
         $cabana = $this->getDoctrine()->getRepository(Cabana::class)->findOneBy(['urlsegment' => $urlsegment]);
         $razas = $this->getDoctrine()->getRepository(Razas::class)->findAll();       
         $categorias = $this->getDoctrine()->getRepository(Categoria::class)->findAll();
+        $cabanas = $this->getDoctrine()->getRepository(CabanaEntity::class)->findAll();
+
         return $this->render('frontpages/cabanadetail.html.twig', [
             'cabana' => $cabana,
             'razas'=>$razas,            
-            'categorias'=>$categorias
+            'categorias'=>$categorias,
+            'cabanas'=>$cabanas
         ]);
     }
 
@@ -64,13 +68,15 @@ class CatalogoController extends AbstractController
         $razas = $this->getDoctrine()->getRepository(Razas::class)->findAll();
         $cabanas = $this->getDoctrine()->getRepository(Cabana::class)->findAll();
         $categorias = $this->getDoctrine()->getRepository(Categoria::class)->findAll();
+        $cabanasentities = $this->getDoctrine()->getRepository(CabanaEntity::class)->findAll();
 
 
         return $this->render('frontpages/lotes.html.twig', [
             'lotes' => $lotes,
             'razas'=>$razas,
             'cabanas'=>$cabanas,
-            'categorias'=>$categorias
+            'categorias'=>$categorias,
+            'cabanasentities'=>$cabanasentities
         ]);
     }
 

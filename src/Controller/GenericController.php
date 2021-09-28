@@ -25,22 +25,61 @@ class GenericController extends AbstractController
 {
 
     /**
+     * @Route("/filterLotesRetIds", name="filterLotesRetIds",options={"expose"= true}, methods={"POST"})
+     */
+    public function FilterLotesRetIds(Request $request)
+    {
+        $cabanaid = $request->request->get('eventoid'); //evtnto
+        $categoria = $request->request->get('categoria');
+        $cabana = $request->request->get('cabana');
+        $raza = $request->request->get('raza');
+
+
+        $qb = new QueryBuilder($this->getDoctrine()->getManager());
+        $qb
+            ->select("L", "T", "R", "C", "CE")
+            ->from("App:Lote", "L")
+            ->leftJoin("L.raza", "R")
+            ->leftJoin("L.toros", "T")
+            ->leftJoin("L.cabana", "C")
+            ->leftJoin("L.categoria", "Ca")
+            ->leftJoin("L.cabanaentity", "CE")
+            ->Where("C.id=" . $cabanaid);
+
+
+        if ($raza != -1)
+            $qb->andWhere("R.id=" . $raza);
+        if ($categoria != -1)
+            $qb->andWhere("Ca.id=" . $categoria);
+        if ($cabana != -1)
+            $qb->andWhere("CE.id=" . $cabana);
+        $result = $qb->getQuery()->getArrayResult();
+        $info = array();
+        foreach ($result as $o)
+            $info[] = $o['id'];
+
+        return new JsonResponse(
+            array('data' => $info)
+        );
+    }
+
+    /**
      * @Route("/offerhistory", name="offerhistory",options={"expose"= true}, methods={"POST"})
      */
     public function GetOfferHistory(Request $request)
     {
         $toroid = $request->request->get('toroid');
         $ofertas  = $this->getDoctrine()->getRepository(Oferta::class)->findBy(
-            array('toro'=>$toroid),
+            array('toro' => $toroid),
             array('fecha' => 'desc')
         );
-        $info='';
-        foreach($ofertas as $o){
-            $info.=$o->getOfertado().' / '.$o->getFecha()->format('d-m-Y H:i:s')."\r\n";
+        $info = '';
+        foreach ($ofertas as $o) {
+            $info .= $o->getOfertado() . ' / ' . $o->getFecha()->format('d-m-Y H:i:s') . "\r\n";
         }
 
         return new JsonResponse(
-           array('data'=>$info)
+            array('data' => $info)
         );
     }
 
@@ -92,9 +131,8 @@ class GenericController extends AbstractController
         if ($parentEntity != null) {
             $qb->select("E", "P")
                 ->from("App:" . $entityName, "E")
-                ->leftJoin("E." . $parentEntity, "P");       
-            }
-         else {
+                ->leftJoin("E." . $parentEntity, "P");
+        } else {
             $qb
                 ->select("E")
                 ->from("App:" . $entityName, "E");
@@ -118,18 +156,21 @@ class GenericController extends AbstractController
 
     public function filterLotes(Request $request)
     {
+
         $raza = $request->request->get('raza');
         $categoria = $request->request->get('categoria');
         $cabana = $request->request->get('cabana');
+        $cabanasentity = $request->request->get('cabanasentity');
 
         $qb = new QueryBuilder($this->getDoctrine()->getManager());
         $qb
-            ->select("L", "T", "R", "C")
+            ->select("L", "T", "R", "C", "CE")
             ->from("App:Lote", "L")
             ->leftJoin("L.raza", "R")
             ->leftJoin("L.toros", "T")
             ->leftJoin("L.cabana", "C")
-            ->leftJoin("L.categoria", "Ca");
+            ->leftJoin("L.categoria", "Ca")
+            ->leftJoin("L.cabanaentity", "CE");
 
         if ($raza != -1)
             $qb->andWhere("R.id=" . $raza);
@@ -137,16 +178,26 @@ class GenericController extends AbstractController
             $qb->andWhere("Ca.id=" . $categoria);
         if ($cabana != -1)
             $qb->andWhere("C.id=" . $cabana);
-        $result = $qb->getQuery()->getArrayResult();
-        foreach ($result as &$r) {
+        if ($cabanasentity != -1)
+            $qb->andWhere("CE.id=" . $cabanasentity);
+      
+            $result = $qb->getQuery()->getArrayResult();
+
+        /* foreach ($result as &$r) {
             if (count($r['gallery']) > 0)
                 $r['portadaImg'] =   $request->getUriForPath('/uploads/Lote/Gallery/' . reset($r['gallery']));
             else
                 $r['portadaImg']  =   $request->getUriForPath('/uploads/genericsimages/bullsilhouette.jpg');
-                $r['oferInfo'] = $this->getDoctrine()->getRepository(Lote::class)->find($r['id'])->OferTextInfo();
-        }
+            $r['oferInfo'] = $this->getDoctrine()->getRepository(Lote::class)->find($r['id'])->OferTextInfo();
+        }*/
 
-        return new JsonResponse($result);
+        $info = array();
+        foreach ($result as $o)
+            $info[] = $o['id'];
+
+        return new JsonResponse(
+            array('data' => $info)
+        );
     }
 
     /**
@@ -160,9 +211,9 @@ class GenericController extends AbstractController
         $oferta = $this->getOferta($loteId, $toroId);
         $lote = $this->getDoctrine()->getRepository(Lote::class)->find($loteId);
         $preciobase = $this->getDoctrine()->getRepository(Toro::class)->find($toroId)->getPreciobase();;
-        $hasprev = !count($oferta) == 0;      
+        $hasprev = !count($oferta) == 0;
         $resp = new stdClass();
-        $resp->preciobase = $hasprev == false ? $preciobase:$oferta[0]->getOfertado() + $lote->getIncrementominimo();     
+        $resp->preciobase = $hasprev == false ? $preciobase : $oferta[0]->getOfertado() + $lote->getIncrementominimo();
         $resp->incminimo = $lote->getIncrementominimo();
         return new JsonResponse($resp);
     }
@@ -185,18 +236,17 @@ class GenericController extends AbstractController
             //Revalidar Oferta
             $ofertainbd = $this->getOferta($loteId, $toroId);
             $lotebd = $this->getDoctrine()->getRepository(Lote::class)->find($loteId);
-            $torobd = $this->getDoctrine()->getRepository(Toro::class)->find($toroId);   
-           // print_r($ofertainbd[0]->getOfertado());die();   
-            if (count($ofertainbd) > 0 && $ofertainbd[0]->getOfertado() >= $oferta)
-            {                 
+            $torobd = $this->getDoctrine()->getRepository(Toro::class)->find($toroId);
+            // print_r($ofertainbd[0]->getOfertado());die();   
+            if (count($ofertainbd) > 0 && $ofertainbd[0]->getOfertado() >= $oferta) {
                 $result = array(
-                    'msj'=>"Hemos registrado que alguien ha hecho una oferta nueva de " .
-                    $ofertainbd[0]->getOfertado() . " . Su oferta debe ser al menos de " . ($ofertainbd[0]->getOfertado() + $lotebd->getIncrementominimo()),
+                    'msj' => "Hemos registrado que alguien ha hecho una oferta nueva de " .
+                        $ofertainbd[0]->getOfertado() . " . Su oferta debe ser al menos de " . ($ofertainbd[0]->getOfertado() + $lotebd->getIncrementominimo()),
                     'newValue' => $ofertainbd[0]->getOfertado() + $lotebd->getIncrementominimo(),
-                    'st'=>'FO'//forceReofer
+                    'st' => 'FO' //forceReofer
                 );
                 return new JsonResponse($result);
-            }               
+            }
 
             $ofertaNueva = new Oferta();
             $ofertaNueva->setNombre($nombre);
@@ -208,10 +258,10 @@ class GenericController extends AbstractController
             $ofertaNueva->setFecha(new \DateTime('now'));
             $ofertaNueva->setLote($lotebd);
             $ofertaNueva->setToro($torobd);
-            $guid =$this->GUID();
+            $guid = $this->GUID();
             $ofertaNueva->setToken($guid);
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($ofertaNueva);          
+            $entityManager->persist($ofertaNueva);
             $entityManager->flush();
 
             $ofermsj = $this->GethtmlOder($ofertaNueva);
@@ -233,17 +283,17 @@ class GenericController extends AbstractController
                 'image5' => $image5,
 
             ));
-          
+
             $from = $this->getParameter('mailer_user');
-            $this->sendMail('Info Oferta',$email,$from,$html,$mailer);          
-           
+            $this->sendMail('Info Oferta', $email, $from, $html, $mailer);
+
             //Admin Mail
-            $urldenied = $this->generateUrl('deniedoffer', array('oferid' => $ofertaNueva->getId(),'token'=>$guid), UrlGeneratorInterface::ABSOLUTE_URL);
-            $urlaccept = $this->generateUrl('aceptdOffer', array('oferid' => $ofertaNueva->getId(),'token'=>$guid), UrlGeneratorInterface::ABSOLUTE_URL);
+            $urldenied = $this->generateUrl('deniedoffer', array('oferid' => $ofertaNueva->getId(), 'token' => $guid), UrlGeneratorInterface::ABSOLUTE_URL);
+            $urlaccept = $this->generateUrl('aceptdOffer', array('oferid' => $ofertaNueva->getId(), 'token' => $guid), UrlGeneratorInterface::ABSOLUTE_URL);
 
             $cabeceramsjadmin = '<span class="spanmsj"> Oferta realizada:</span><br>';
-            $footermsjadmin = '<span class="spanmsj"> <a href="'.$urlaccept.'"> <span>Aceptar Oferta</span> </a> <br><br><br> <a href="'.$urldenied.'"><span>Rechazar Oferta</span></a></span>';
-         
+            $footermsjadmin = '<span class="spanmsj"> <a href="' . $urlaccept . '"> <span>Aceptar Oferta</span> </a> <br><br><br> <a href="' . $urldenied . '"><span>Rechazar Oferta</span></a></span>';
+
             $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
                 'mensaje' => $cabeceramsjadmin . $ofermsj . $footermsjadmin,
                 'nombre' => 'Admin',
@@ -254,44 +304,44 @@ class GenericController extends AbstractController
                 'image5' => $image5,
             ));
             $adminmail = $this->getParameter('mailer_admin');
-            $this->sendMail('Info Oferta',$adminmail,$from,$html,$mailer);        
+            $this->sendMail('Info Oferta', $adminmail, $from, $html, $mailer);
 
             $result = array(
-                'msj'=>'Oferta enviada con exito! Hemos enviado un email de confirmacion.',
-                'newValue' => $oferta+$lotebd->getIncrementominimo(),
-                'st'=>'ET'//exito
-            );          
+                'msj' => 'Oferta enviada con exito! Hemos enviado un email de confirmacion.',
+                'newValue' => $oferta + $lotebd->getIncrementominimo(),
+                'st' => 'ET' //exito
+            );
             return new JsonResponse($result);
         } catch (\Exception $e) {
             $adminmail = $this->getParameter('mailer_admin');
             $emessage = (new Email())->subject('Error en el sistema de ofertas')->to($adminmail);
             $from = $this->getParameter('mailer_user');
             $emessage->from($from);
-            $emessage->html($e->getMessage().' .Linea:'.$e->getLine(), 'text/plain');
+            $emessage->html($e->getMessage() . ' .Linea:' . $e->getLine(), 'text/plain');
             $mailer->send($emessage);
             $result = array(
-                'msj'=>'Hemos detectado un error en el sistema, nuestros especialistas seran alertados automaticamente. Le sugerimos intentar mas tarde.',
+                'msj' => 'Hemos detectado un error en el sistema, nuestros especialistas seran alertados automaticamente. Le sugerimos intentar mas tarde.',
                 'newValue' => 0,
-                'st'=>'ERR'//error
+                'st' => 'ERR' //error
             );
             return new JsonResponse($result);
         }
     }
 
-    
+
 
     /**
      * @Route("/deniedoffer/{oferid}/{token}",options={"expose"=true}, name="deniedoffer")
      */
-    public function deniedOffer(Request $request,$oferid,$token,MailerInterface $mailer, \Twig_Environment $twig)
+    public function deniedOffer(Request $request, $oferid, $token, MailerInterface $mailer, \Twig_Environment $twig)
     {
         $ofer =  $this->getDoctrine()->getRepository(Oferta::class)->findOneBy(array(
-            'id'=>$oferid,
-             'token'=>$token
-        ));       
+            'id' => $oferid,
+            'token' => $token
+        ));
         $ofer->setStatus('R');
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($ofer);    
+        $entityManager->persist($ofer);
         $entityManager->flush();
         //Email
         $image1 = $request->getUriForPath('/uploads/genericsimages/image-1.png');
@@ -300,7 +350,7 @@ class GenericController extends AbstractController
         $image4 = $request->getUriForPath('/uploads/genericsimages/image-4.png');
         $image5 = $request->getUriForPath('/uploads/genericsimages/image-5.png');
         $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido Rechazada, detalles:</span><br>';
-        $ofertaHtml = $this->GethtmlOder($ofer);      
+        $ofertaHtml = $this->GethtmlOder($ofer);
         $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
             'mensaje' => $cabeceramsjcliente . $ofertaHtml,
             'nombre' => $ofer->getNombre(),
@@ -312,87 +362,89 @@ class GenericController extends AbstractController
         ));
         $from = $this->getParameter('mailer_user');
         $email = $ofer->getEmail();
-        $this->sendMail('Info Oferta',$email,$from,$html,$mailer);       
-        return new JsonResponse('Oferta Rechazada. Se ha notificado al cliente');   
+        $this->sendMail('Info Oferta', $email, $from, $html, $mailer);
+        return new JsonResponse('Oferta Rechazada. Se ha notificado al cliente');
     }
     /**
      * @Route("/aceptdOffer/{oferid}/{token}",options={"expose"=true}, name="aceptdOffer")
      */
-    public function aceptdOffer(Request $request,$oferid,$token,MailerInterface $mailer, \Twig_Environment $twig)
+    public function aceptdOffer(Request $request, $oferid, $token, MailerInterface $mailer, \Twig_Environment $twig)
     {
-       $ofer =  $this->getDoctrine()->getRepository(Oferta::class)->findOneBy(array(
-           'id'=>$oferid,
-            'token'=>$token
-       ));
-       $toro = $ofer->getToro();
-       $toro->setOfertaActual($ofer->getOfertado());
-       $ofer->setStatus('A');
-       $entityManager = $this->getDoctrine()->getManager();
-       $entityManager->persist($ofer);    
-       $entityManager->persist($toro);
-       $entityManager->flush();
-       //Mail
-  
-       $image1 = $request->getUriForPath('/uploads/genericsimages/image-1.png');
-       $image2 = $request->getUriForPath('/uploads/genericsimages/image-2.png');
-       $image3 = $request->getUriForPath('/uploads/genericsimages/image-3.png');
-       $image4 = $request->getUriForPath('/uploads/genericsimages/image-4.png');
-       $image5 = $request->getUriForPath('/uploads/genericsimages/image-5.png');
-       $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido aceptada, detalles:</span><br>';
-       $ofertaHtml = $this->GethtmlOder($ofer );
-       $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
-           'mensaje' => $cabeceramsjcliente . $ofertaHtml,
-           'nombre' => $ofer->getNombre(),
-           'image1' => $image1,
-           'image2' => $image2,
-           'image3' => $image3,
-           'image4' => $image4,
-           'image5' => $image5,
-       ));
-       $from = $this->getParameter('mailer_user');
-       $email = $ofer->getEmail();
-       $this->sendMail('Info Oferta',$email,$from,$html,$mailer);      
-       //Notificar ofertante anterior
-       $toroId =  $ofer->getToro()->getId();
-       $loteId = $ofer->getLote()->getId();
-       $lastOfer =  $this->getDoctrine()->getRepository(Oferta::class)->findBy(array(
-            'lote'=> $loteId,
-            'toro'=> $toroId,
-            'status'=>'A',      
-          
-       ),array('id' => 'desc'));
-      
-        if(count($lastOfer)>1){
-           $prevOfer = $lastOfer[1];
-           $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido superada :<br>'.
-           'Toro:'.$ofer->getToro()->getNombre().'<br> Lote:'. $ofer->getLote()->getNombre().'<br> Nueva Oferta:'.
-           $ofer->getOfertado().'</span><br>';
-           $newofertaUrl = $this->generateUrl('lote_detail', array(
-               'id' => $ofer->getLote()->getId()),
-                UrlGeneratorInterface::ABSOLUTE_URL);
-           $newoferta ='<br><span>Click <a href="'.$newofertaUrl.'"> aqui</a> para hacer una nueva oferta<a>';
-           $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
-               'mensaje' => $cabeceramsjcliente.$newoferta,
-               'nombre' => $prevOfer->getNombre(),
-               'image1' => $image1,
-               'image2' => $image2,
-               'image3' => $image3,
-               'image4' => $image4,
-               'image5' => $image5,
-           ));
-           //set offert superada
-           $prevOfer->setStatus('S');
-           $entityManager = $this->getDoctrine()->getManager();
-           $entityManager->persist($prevOfer);             
-           $entityManager->flush();
-           //
-           $from = $this->getParameter('mailer_user');
-           $email = $prevOfer->getEmail();
-           $this->sendMail('Info Oferta',$email,$from,$html,$mailer);
-           
+        $ofer =  $this->getDoctrine()->getRepository(Oferta::class)->findOneBy(array(
+            'id' => $oferid,
+            'token' => $token
+        ));
+        $toro = $ofer->getToro();
+        $toro->setOfertaActual($ofer->getOfertado());
+        $ofer->setStatus('A');
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($ofer);
+        $entityManager->persist($toro);
+        $entityManager->flush();
+        //Mail
+
+        $image1 = $request->getUriForPath('/uploads/genericsimages/image-1.png');
+        $image2 = $request->getUriForPath('/uploads/genericsimages/image-2.png');
+        $image3 = $request->getUriForPath('/uploads/genericsimages/image-3.png');
+        $image4 = $request->getUriForPath('/uploads/genericsimages/image-4.png');
+        $image5 = $request->getUriForPath('/uploads/genericsimages/image-5.png');
+        $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido aceptada, detalles:</span><br>';
+        $ofertaHtml = $this->GethtmlOder($ofer);
+        $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
+            'mensaje' => $cabeceramsjcliente . $ofertaHtml,
+            'nombre' => $ofer->getNombre(),
+            'image1' => $image1,
+            'image2' => $image2,
+            'image3' => $image3,
+            'image4' => $image4,
+            'image5' => $image5,
+        ));
+        $from = $this->getParameter('mailer_user');
+        $email = $ofer->getEmail();
+        $this->sendMail('Info Oferta', $email, $from, $html, $mailer);
+        //Notificar ofertante anterior
+        $toroId =  $ofer->getToro()->getId();
+        $loteId = $ofer->getLote()->getId();
+        $lastOfer =  $this->getDoctrine()->getRepository(Oferta::class)->findBy(array(
+            'lote' => $loteId,
+            'toro' => $toroId,
+            'status' => 'A',
+
+        ), array('id' => 'desc'));
+
+        if (count($lastOfer) > 1) {
+            $prevOfer = $lastOfer[1];
+            $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido superada :<br>' .
+                'Toro:' . $ofer->getToro()->getNombre() . '<br> Lote:' . $ofer->getLote()->getNombre() . '<br> Nueva Oferta:' .
+                $ofer->getOfertado() . '</span><br>';
+            $newofertaUrl = $this->generateUrl(
+                'lote_detail',
+                array(
+                    'id' => $ofer->getLote()->getId()
+                ),
+                UrlGeneratorInterface::ABSOLUTE_URL
+            );
+            $newoferta = '<br><span>Click <a href="' . $newofertaUrl . '"> aqui</a> para hacer una nueva oferta<a>';
+            $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
+                'mensaje' => $cabeceramsjcliente . $newoferta,
+                'nombre' => $prevOfer->getNombre(),
+                'image1' => $image1,
+                'image2' => $image2,
+                'image3' => $image3,
+                'image4' => $image4,
+                'image5' => $image5,
+            ));
+            //set offert superada
+            $prevOfer->setStatus('S');
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($prevOfer);
+            $entityManager->flush();
+            //
+            $from = $this->getParameter('mailer_user');
+            $email = $prevOfer->getEmail();
+            $this->sendMail('Info Oferta', $email, $from, $html, $mailer);
         }
         return new JsonResponse('Oferta Aceptada. Se ha notificado al cliente y a la oferta previa de su rechazo');
-
     }
 
 
@@ -404,12 +456,11 @@ class GenericController extends AbstractController
             ->where("O.toro=" . $toroId)
             ->andWhere("O.lote=" . $loteId)
             ->andWhere("O.status='A'")
-            ->orderBy('O.id', 'DESC')->setMaxResults(1)
-            ;
+            ->orderBy('O.id', 'DESC')->setMaxResults(1);
         return $qb->getQuery()->getResult();
     }
 
-    private function sendMail($subjet,$toEmail,$from,$html,$mailer)
+    private function sendMail($subjet, $toEmail, $from, $html, $mailer)
     {
         $emessage = (new Email())->subject($subjet)->to($toEmail);
         $from = $this->getParameter('mailer_user');
@@ -418,31 +469,28 @@ class GenericController extends AbstractController
         $mailer->send($emessage);
     }
 
-    
-   private function GUID()
-   {
-       if (function_exists('com_create_guid') === true)
-       {
-           return trim(com_create_guid(), '{}');
-       }
 
-       return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
-   }
+    private function GUID()
+    {
+        if (function_exists('com_create_guid') === true) {
+            return trim(com_create_guid(), '{}');
+        }
 
-   private function GethtmlOder($oferta){
-       
-    $ofermsj = '<span class="spanmsj"> Detalles de la Oferta </span><br>';
-    $ofermsj .= '<span class="spanmsj"> Nombre: ' . $oferta->getNombre() . '</span><br>';
-    $ofermsj .= '<span class="spanmsj"> Empresa: ' .$oferta->getEmpresa() . '</span><br>';
-    $ofermsj .= '<span class="spanmsj"> DNI/CUIT: ' . $oferta->getDnicuit() . '</span><br>';
-    $ofermsj .= '<span class="spanmsj"> EMAIL: ' . $oferta->getEmail() . '</span><br>';
-    $ofermsj .= '<span class="spanmsj"> Telefono: ' .$oferta->getTelefono() . '</span><br><br><br>';
-    $ofermsj .= '<span class="spanmsj"><strong> Ofertado: ' .$oferta->getOfertado() . '</strong></span><br>';
-    $ofermsj .= '<span class="spanmsj"> Lote: ' . $oferta->getLote()->getNombre() . '</span><br>';
-    $ofermsj .= '<span class="spanmsj"> Toro: ' . $oferta->getToro()->getNombre() . '</span><br><br><br>';
-    return $ofermsj;
+        return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+    }
 
-   }
+    private function GethtmlOder($oferta)
+    {
 
-
+        $ofermsj = '<span class="spanmsj"> Detalles de la Oferta </span><br>';
+        $ofermsj .= '<span class="spanmsj"> Nombre: ' . $oferta->getNombre() . '</span><br>';
+        $ofermsj .= '<span class="spanmsj"> Empresa: ' . $oferta->getEmpresa() . '</span><br>';
+        $ofermsj .= '<span class="spanmsj"> DNI/CUIT: ' . $oferta->getDnicuit() . '</span><br>';
+        $ofermsj .= '<span class="spanmsj"> EMAIL: ' . $oferta->getEmail() . '</span><br>';
+        $ofermsj .= '<span class="spanmsj"> Telefono: ' . $oferta->getTelefono() . '</span><br><br><br>';
+        $ofermsj .= '<span class="spanmsj"><strong> Ofertado: ' . $oferta->getOfertado() . '</strong></span><br>';
+        $ofermsj .= '<span class="spanmsj"> Lote: ' . $oferta->getLote()->getNombre() . '</span><br>';
+        $ofermsj .= '<span class="spanmsj"> Toro: ' . $oferta->getToro()->getNombre() . '</span><br><br><br>';
+        return $ofermsj;
+    }
 }

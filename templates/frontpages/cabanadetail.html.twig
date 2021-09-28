@@ -12,7 +12,7 @@
 <div class="page-content-product">
 
 	<div class="container">
-
+		<input type="text" value={{cabana.id}} id="cabanaidtext" hidden>
 		<div class="row d-flex justify-content-center mt-100">
 			<div class="col-md-12">
 				<div class="card">
@@ -106,31 +106,43 @@
 				<ul class="nav nav-tabs pull-left left-t">
 					<li class="dropdown">
 						<form>
-							<select id="razasfilter" class="selectpicker">
+							<select id="razasfilter" class="selectpicker selectpickerdetail">
 								<option value="-1">Todas las razas</option>
 								{% for r in razas %}
-								<option value={{r.nombre|replace({' ': ''}) }}>{{r.nombre}}</option>
+								<option value={{r.id}}>{{r.nombre}}</option>
 								{% endfor %}
 							</select>
 						</form>
 					</li>
 					<li class="dropdown">
 						<form>
-							<select id="categoriasfilter" class="selectpicker">
+							<select id="categoriasfilter" class="selectpicker selectpickerdetail">
 								<option value="-1">Todas las categorías</option>
 								{% for c in categorias %}
-								<option value={{c.nombre|replace({' ': ''})}}>{{c.nombre}}</option>
+								<option value={{c.id}}>{{c.nombre}}</option>
 								{% endfor %}
 							</select>
 						</form>
 					</li>
+
+					<li class="dropdown">
+						<form>
+							<select id="cabanasfilter" class="selectpicker selectpickerdetail">
+								<option value="-1">Todas las Cabañas</option>
+								{% for c in cabanas %}
+								<option value={{c.id}}>{{c.nombre}}</option>
+								{% endfor %}
+							</select>
+						</form>
+					</li>
+
 				</ul>
 			</div>
 			<div class="row cat-pd">
 
 				{% for lote in cabana.lotes %}
 				{% if lote.desactivado == false or lote.desactivado is null %}
-				<div class="col-md-3 {% if lote.raza is not null %}{{lote.raza.nombre|replace({' ': ''})}}{% endif %} {% if lote.categoria is not null %}{{lote.categoria.nombre|replace({' ': ''})}}{% endif %} allvisible">
+				<div class="col-md-3 allvisible" name="{{lote.id}}">
 					<div class="small-box-c">
 						<div class="small-img-b">
 							<a href="{{ path('lote_detail', {'id': lote.id}) }}"><img class="img-responsive"
@@ -179,30 +191,37 @@
 </div>{% endblock %}
 {% block customjavascripts %}
 <script>
-	$(".selectpicker").change(function () {
+	$(".selectpickerdetail").change(function () {
 		var raza = $("#razasfilter").val();
 		var categoria = $("#categoriasfilter").val();
-		$('.allvisible').hide();
-		if(raza != "-1" && categoria != "-1")
-		{
-		  $('.'+raza+'.'+categoria).show();
-			
-		}
-		else if(raza != "-1" && categoria == "-1")
-		{
-			$('.'+raza).show();
-		}
-		else if(categoria != "-1" && raza == "-1")
-		{
-			$('.'+categoria).show();
-		}
-		else  if(categoria == "-1" && raza == "-1"){
-			$('.allvisible').show();
-		}
-		
+		var cabana = $("#cabanasfilter").val();
+		var eventoId = $('#cabanaidtext').val();
 
-		
+		var url = Routing.generate('filterLotesRetIds');
+		var datos = {
+			raza: raza,
+			categoria: categoria,
+			cabana: cabana,
+			eventoid: eventoId,
 
+		};
+
+		$.ajax({
+				type: "POST",
+				url: url,
+				data: datos,
+			})
+			.done(function (respose) {
+				$('.allvisible').hide();				
+				respose.data.forEach(function (obj) {
+					$('div[name="' + obj + '"]').show();
+				});
+
+				// console.log(data);
+			})
+			.fail(function (data) {
+				console.log(data);
+			});
 	});
 </script>
 

@@ -58,6 +58,11 @@ class Lote
      */ 
     private $cabana;
 
+         /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\CabanaEntity",inversedBy="lotes", cascade={"persist"})     
+     */ 
+    private $cabanaentity;
+
     /**
     * @ORM\Column(type="boolean", nullable=false,options={"default": false})
     */
@@ -258,6 +263,18 @@ class Lote
            
         }
         return $info;
+    }
+
+    public function getCabanaentity(): ?CabanaEntity
+    {
+        return $this->cabanaentity;
+    }
+
+    public function setCabanaentity(?CabanaEntity $cabanaentity): self
+    {
+        $this->cabanaentity = $cabanaentity;
+
+        return $this;
     }
 
 }

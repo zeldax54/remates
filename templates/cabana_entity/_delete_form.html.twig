@@ -1,0 +1,7 @@
+<div class="marker">
+    <form method="post" action="{{ path('cabanaentity_delete', {'id': cabana_entity.id}) }}" onsubmit="{{ deletemsg }}">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cabana_entity.id) }}">
+        <button class="btn btn-danger">Delete</button>
+    </form>
+ </div>
