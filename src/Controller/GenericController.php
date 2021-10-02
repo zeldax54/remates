@@ -271,7 +271,7 @@ class GenericController extends AbstractController
             $image3 = $request->getUriForPath('/uploads/genericsimages/image-3.png');
             $image4 = $request->getUriForPath('/uploads/genericsimages/image-4.png');
             $image5 = $request->getUriForPath('/uploads/genericsimages/image-5.png');
-            $cabeceramsjcliente = '<span class="spanmsj"> Se registr&oacute; una oferta desde su email que esta siendo revisada.</span>';
+            $cabeceramsjcliente = '<span class="spanmsj"> Se registr&oacute; una oferta desde su email que est&aacute; siendo revisada.</span>';
             $footermsjcliente = '<span class="spanmsj">Recibir&aacute; un email similar cuando la oferta sea aprobada o rechazada</span>';
             $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
                 'mensaje' => $cabeceramsjcliente . $ofermsj . $footermsjcliente,
@@ -481,9 +481,8 @@ class GenericController extends AbstractController
 
     private function GethtmlOder($oferta)
     {
-        $ofermsj  = '<br>';
-        $ofermsj .= '<span class="spanmsj"> Detalles de la Oferta </span><br>';
-        $ofermsj.='<br>';
+        $ofermsj  = '<br><br>';
+        $ofermsj .= '<span class="spanmsj"> Detalles de la Oferta </span><br>'; 
         $ofermsj .= '<span class="spanmsj"> Nombre: ' . $oferta->getNombre() . '</span><br>';
         $ofermsj .= '<span class="spanmsj"> Empresa: ' . $oferta->getEmpresa() . '</span><br>';
         $ofermsj .= '<span class="spanmsj"> DNI/CUIT: ' . $oferta->getDnicuit() . '</span><br>';

@@ -115,7 +115,7 @@
 									hs</p>
 								<p>
 									<strong class="lotendic">Incremento Mínimo:</strong>
-									$<span id="incminimoinpage">{{lote.incrementominimo}}</span>
+									$<span id="incminimoinpage">{{ lote.incrementominimo | number_format(0, ',', '.') }}</span>
 								</p>
 							</div>
 						</div>
@@ -134,13 +134,13 @@
 								<div class="mypane">
 									<p><strong>{{toro.nombre}}</strong></p>
 									<div class="priceclass">
-										<p>Precio base: ${{toro.preciobase}}</p>
+										<p>Precio base: ${{ toro.preciobase |number_format(0, ',', '.') }}</p>
 										<p class="lotendic">
 											<strong>Oferta Actual $:
 												{% if toro.ofertaActual ==0 %}
 												-
 												{% else %}
-												{{toro.ofertaActual}}
+												{{ toro.ofertaActual | number_format(0, ',', '.') }}
 												{% endif %}
 											</strong>
 										</p>
