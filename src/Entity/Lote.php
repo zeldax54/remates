@@ -274,6 +274,7 @@ class Lote
             else{
                 $info.='<strong>'.$toro->getNombre().'</strong>: ';
                 $info.= ' - / '.number_format($toro->getPreciobase(),0,',','.');
+                $info.='<br>';
             }
            
         }
