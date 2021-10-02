@@ -31,11 +31,17 @@ class Lote
      * @ORM\Column(type="string", length=255)
      */
     private $nombre;
+    
    
       /**
      * @ORM\Column(type="float", nullable=false)
      */
     private $incrementominimo;
+
+    /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     */
+    private $textocantidades;
   
   
     /**
@@ -260,10 +266,14 @@ class Lote
             $ofertaActual = $toro->getOfertaActual();
             if($ofertaActual>0)
             {
-                $info.='<strong>'.$toro->getNombre().'</strong>:';
-                $info.=$toro->getPreciobase().'/';
-                $info.= $ofertaActual > 0 ? $ofertaActual:'-';
+                $info.='<strong>'.$toro->getNombre().'</strong>: ';              
+                $info.= number_format($ofertaActual,0,',','.').' / ';
+                $info.= number_format($toro->getPreciobase(),0,',','.');
                 $info.='<br>';
+            }
+            else{
+                $info.='<strong>'.$toro->getNombre().'</strong>: ';
+                $info.= ' - / '.number_format($toro->getPreciobase(),0,',','.');
             }
            
         }
@@ -278,6 +288,18 @@ class Lote
     public function setCabanaentity(?CabanaEntity $cabanaentity): self
     {
         $this->cabanaentity = $cabanaentity;
+
+        return $this;
+    }
+
+    public function getTextocantidades(): ?string
+    {
+        return $this->textocantidades;
+    }
+
+    public function setTextocantidades(?string $textocantidades): self
+    {
+        $this->textocantidades = $textocantidades;
 
         return $this;
     }

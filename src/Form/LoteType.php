@@ -65,7 +65,8 @@ class LoteType extends AbstractType
             ->add('incrementominimo',IntegerType::class,[
                 'label'=>'Incremento Mínimo',
                 
-                ] )     
+                ] )  
+                ->add('textocantidades')   
             ->add('toros',null, array(
             'by_reference' => false))
         ;

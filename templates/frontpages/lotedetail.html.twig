@@ -32,8 +32,8 @@
 									{% for t in lote.toros %}
 									{% for g in t.gallery %}
 									<div><img src="{{ asset('uploads/Toro/gallery/' ~ g ) }}" alt="#">
-										<div class="caption">
-											<span>{{t.nombre}}</span>
+									  <div class="caption">
+										{#	<span>{{t.nombre}}</span>#}
 										</div>
 									</div>
 									{% endfor %}

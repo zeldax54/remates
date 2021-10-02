@@ -271,7 +271,7 @@ class GenericController extends AbstractController
             $image3 = $request->getUriForPath('/uploads/genericsimages/image-3.png');
             $image4 = $request->getUriForPath('/uploads/genericsimages/image-4.png');
             $image5 = $request->getUriForPath('/uploads/genericsimages/image-5.png');
-            $cabeceramsjcliente = '<span class="spanmsj"> Se registr&ograve; una oferta desde su email que esta siendo revisada:</span><br>';
+            $cabeceramsjcliente = '<span class="spanmsj"> Se registr&oacute; una oferta desde su email que esta siendo revisada.</span>';
             $footermsjcliente = '<span class="spanmsj">Recibir&aacute; un email similar cuando la oferta sea aprobada o rechazada</span>';
             $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
                 'mensaje' => $cabeceramsjcliente . $ofermsj . $footermsjcliente,
@@ -349,7 +349,7 @@ class GenericController extends AbstractController
         $image3 = $request->getUriForPath('/uploads/genericsimages/image-3.png');
         $image4 = $request->getUriForPath('/uploads/genericsimages/image-4.png');
         $image5 = $request->getUriForPath('/uploads/genericsimages/image-5.png');
-        $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido Rechazada, detalles:</span><br>';
+        $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido Rechazada, detalles:</span>';
         $ofertaHtml = $this->GethtmlOder($ofer);
         $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
             'mensaje' => $cabeceramsjcliente . $ofertaHtml,
@@ -388,7 +388,7 @@ class GenericController extends AbstractController
         $image3 = $request->getUriForPath('/uploads/genericsimages/image-3.png');
         $image4 = $request->getUriForPath('/uploads/genericsimages/image-4.png');
         $image5 = $request->getUriForPath('/uploads/genericsimages/image-5.png');
-        $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido <span style="font-weight:bold;color:green">aceptada</span>!</span><br>';
+        $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido <span style="font-weight:bold;color:green">aceptada</span>!</span>';
         $ofertaHtml = $this->GethtmlOder($ofer);
         $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
             'mensaje' => $cabeceramsjcliente . $ofertaHtml,
@@ -481,14 +481,15 @@ class GenericController extends AbstractController
 
     private function GethtmlOder($oferta)
     {
-
-        $ofermsj = '<span class="spanmsj"> Detalles de la Oferta </span><br>';
+        $ofermsj  = '<br>';
+        $ofermsj .= '<span class="spanmsj"> Detalles de la Oferta </span><br>';
+        $ofermsj.='<br>';
         $ofermsj .= '<span class="spanmsj"> Nombre: ' . $oferta->getNombre() . '</span><br>';
         $ofermsj .= '<span class="spanmsj"> Empresa: ' . $oferta->getEmpresa() . '</span><br>';
         $ofermsj .= '<span class="spanmsj"> DNI/CUIT: ' . $oferta->getDnicuit() . '</span><br>';
         $ofermsj .= '<span class="spanmsj"> Email: ' . $oferta->getEmail() . '</span><br>';
         $ofermsj .= '<span class="spanmsj"> Tel&eacute;fono: ' . $oferta->getTelefono() . '</span><br><br><br>';
-        $ofermsj .= '<span class="spanmsj"><strong> Ofertado: ' . $oferta->getOfertado() . '</strong></span><br>';
+        $ofermsj .= '<span class="spanmsj"><strong> Ofertado: ' . number_format($oferta->getOfertado(),0,',','.') . '</strong></span><br>';
         $ofermsj .= '<span class="spanmsj"> Lote: ' . $oferta->getLote()->getNombre() . '</span><br>';
         $ofermsj .= '<span class="spanmsj"> Toro: ' . $oferta->getToro()->getNombre() . '</span><br><br><br>';
         return $ofermsj;

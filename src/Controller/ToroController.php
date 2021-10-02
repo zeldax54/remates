@@ -38,7 +38,8 @@ class ToroController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();            
+            $entityManager = $this->getDoctrine()->getManager();      
+            $toro->setOfertaActual(0);      
             $entityManager->persist($toro);
             $entityManager->flush();
 

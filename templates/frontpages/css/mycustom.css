@@ -118,3 +118,14 @@ video-responsive {
  #top-menu{
      display: none;
  }
+
+ #lotecategorazainfo{
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+ }
+ .lotecategorazainfodiv{
+  position: absolute;
+    bottom: 173px;
+    left: 32px;
+ }

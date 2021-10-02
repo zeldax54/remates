@@ -64,6 +64,7 @@
 							{% endfor %}
 
 
+							{% if cabana.videos is not null%}
 							{% for v in cabana.videos|split(';') %}
 							<div>
 								<iframe width="600" height="400" src="https://www.youtube.com/embed/{{v}}"
@@ -72,6 +73,7 @@
 									allowfullscreen></iframe>
 							</div>
 							{% endfor %}
+							{% endif %}
 
 						</div>
 					</div>
@@ -144,9 +146,11 @@
 				{% if lote.desactivado == false or lote.desactivado is null %}
 				<div class="col-md-3 allvisible" name="{{lote.id}}">
 					<div class="small-box-c">
+						<div class="lotecategorazainfodiv"><span id="lotecategorazainfo"> {{lote.cabanaentity ? lote.cabanaentity.nombre ~ ' -'}} {{lote.raza ? lote.raza.nombre ~ ' -' }} {{ lote.categoria ? lote.categoria.nombre}} </span></div>
 						<div class="small-img-b">
 							<a href="{{ path('lote_detail', {'id': lote.id}) }}"><img class="img-responsive"
 									src="{{ asset('uploads/Lote/gallery/' ~ lote.gallery|first ) }}" alt="#" /></a>
+								
 						</div>
 						<div class="dit-t clearfix">
 							<div class="left-ti">
@@ -170,8 +174,7 @@
 							<a href="{{ path('lote_detail', {'id': lote.id}) }}">
 								<i class="" aria-hidden="true"></i>
 								Hacer preoferta</a>
-							<p>{{ lote.toros|length }}
-								Toros</p>
+							<p>{% if lote.textocantidades is not null %} {{lote.textocantidades}} {% endif %} </p>
 						</div>
 
 					</div>
