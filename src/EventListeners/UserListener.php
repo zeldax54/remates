@@ -4,7 +4,7 @@
 namespace App\EventListener;
 
 
-use AppBundle\Controller\Traits\FuncionesFichero;
+//use AppBundle\Controller\Traits\FuncionesFichero;
 use DateTimeZone;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\FormEvent;
@@ -20,7 +20,7 @@ class UserListener implements EventSubscriberInterface
 {
     private $router;
     private $ruta;
-    use FuncionesFichero;
+  //  use FuncionesFichero;
 
     public function __construct(UrlGeneratorInterface $router,KernelInterface $kernel)
     {
@@ -57,8 +57,8 @@ class UserListener implements EventSubscriberInterface
                     $fileName = $fecha->format('d-m-Y-h-i-') . $fichero->getClientOriginalName() . '.' . $extension;
                 else
                     $fileName = $fecha->format('d-m-Y-h-i-') . $fichero->getClientOriginalName();
-                $this->moverFichero($fichero, $fileName,$this->ruta);
-                $usuario->setAvatar($fileName);
+               // $this->moverFichero($fichero, $fileName,$this->ruta);
+              //  $usuario->setAvatar($fileName);
                 $event->getRequest()->files->remove('fos_user_registration_form');
             }
         }
@@ -106,8 +106,8 @@ class UserListener implements EventSubscriberInterface
                     $fileName = $fecha->format('d-m-Y-h-i-') . $fichero->getClientOriginalName() . '.' . $extension;
                 else
                     $fileName = $fecha->format('d-m-Y-h-i-') . $fichero->getClientOriginalName();
-                $this->moverFichero($fichero, $fileName,$this->ruta);
-                $usuario->setAvatar($fileName);
+               // $this->moverFichero($fichero, $fileName,$this->ruta);
+              //  $usuario->setAvatar($fileName);
                 $event->getRequest()->files->remove('fos_user_profile_form');
             }
         }

@@ -153,7 +153,12 @@ class Lote
     
     public function __toString()
     {
-        return $this->nombre;
+        $ret = '';
+        if($this->cabanaentity!=null)    
+         $ret.='-Cabaña:'.$this->cabanaentity->getNombre();
+        if($this->cabana!=null)
+          $ret.='-Evento:'.$this->cabana->getNombre();    
+        return $this->nombre.$ret;         
     }
 
     public function getIncrementominimo(): ?float
