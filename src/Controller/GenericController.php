@@ -271,8 +271,8 @@ class GenericController extends AbstractController
             $image3 = $request->getUriForPath('/uploads/genericsimages/image-3.png');
             $image4 = $request->getUriForPath('/uploads/genericsimages/image-4.png');
             $image5 = $request->getUriForPath('/uploads/genericsimages/image-5.png');
-            $cabeceramsjcliente = '<span class="spanmsj"> Hemos registrado una oferta desde su email que esta siendo revisada, a continuacion los detalles:</span><br>';
-            $footermsjcliente = '<span class="spanmsj">Recibira un email similar cuando la oferta sea aprobada o rechazada</span>';
+            $cabeceramsjcliente = '<span class="spanmsj"> Se registr&ograve; una oferta desde su email que esta siendo revisada:</span><br>';
+            $footermsjcliente = '<span class="spanmsj">Recibir&aacute; un email similar cuando la oferta sea aprobada o rechazada</span>';
             $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
                 'mensaje' => $cabeceramsjcliente . $ofermsj . $footermsjcliente,
                 'nombre' => $nombre,
@@ -307,7 +307,7 @@ class GenericController extends AbstractController
             $this->sendMail('Info Oferta', $adminmail, $from, $html, $mailer);
 
             $result = array(
-                'msj' => 'Oferta enviada con exito! Hemos enviado un email de confirmacion.',
+                'msj' => 'Oferta enviada con exito! Recibir&aacute; un email de confirmación.',
                 'newValue' => $oferta + $lotebd->getIncrementominimo(),
                 'st' => 'ET' //exito
             );
@@ -320,7 +320,7 @@ class GenericController extends AbstractController
             $emessage->html($e->getMessage() . ' .Linea:' . $e->getLine(), 'text/plain');
             $mailer->send($emessage);
             $result = array(
-                'msj' => 'Hemos detectado un error en el sistema, nuestros especialistas seran alertados automaticamente. Le sugerimos intentar mas tarde.',
+                'msj' => 'Detectamos un error en el sistema, nuestros especialistas seran alertados automaticamente. Le sugerimos intentar mas tarde.',
                 'newValue' => 0,
                 'st' => 'ERR' //error
             );
@@ -388,7 +388,7 @@ class GenericController extends AbstractController
         $image3 = $request->getUriForPath('/uploads/genericsimages/image-3.png');
         $image4 = $request->getUriForPath('/uploads/genericsimages/image-4.png');
         $image5 = $request->getUriForPath('/uploads/genericsimages/image-5.png');
-        $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido aceptada, detalles:</span><br>';
+        $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido <span style="font-weight:bold;color:green">aceptada</span>!:</span><br>';
         $ofertaHtml = $this->GethtmlOder($ofer);
         $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
             'mensaje' => $cabeceramsjcliente . $ofertaHtml,
@@ -414,7 +414,7 @@ class GenericController extends AbstractController
 
         if (count($lastOfer) > 1) {
             $prevOfer = $lastOfer[1];
-            $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido superada :<br>' .
+            $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido <span style="font-weight:bold;color:red">superada</span> :<br>' .
                 'Toro:' . $ofer->getToro()->getNombre() . '<br> Lote:' . $ofer->getLote()->getNombre() . '<br> Nueva Oferta:' .
                 $ofer->getOfertado() . '</span><br>';
             $newofertaUrl = $this->generateUrl(
@@ -424,7 +424,7 @@ class GenericController extends AbstractController
                 ),
                 UrlGeneratorInterface::ABSOLUTE_URL
             );
-            $newoferta = '<br><span>Click <a href="' . $newofertaUrl . '"> aqui</a> para hacer una nueva oferta<a>';
+            $newoferta = '<br><span style="font-weight:bold;color:#FF7F50;font-size:20px">Click <a href="' . $newofertaUrl . '"> aqui</a> para hacer una nueva oferta<a>';
             $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
                 'mensaje' => $cabeceramsjcliente . $newoferta,
                 'nombre' => $prevOfer->getNombre(),
@@ -444,7 +444,7 @@ class GenericController extends AbstractController
             $email = $prevOfer->getEmail();
             $this->sendMail('Info Oferta', $email, $from, $html, $mailer);
         }
-        return new JsonResponse('Oferta Aceptada. Se ha notificado al cliente y a la oferta previa de su rechazo');
+        return new JsonResponse('Oferta Aceptada. Se ha notificado al cliente y a la oferta previa de su superaci&oacute;n');
     }
 
 
@@ -486,8 +486,8 @@ class GenericController extends AbstractController
         $ofermsj .= '<span class="spanmsj"> Nombre: ' . $oferta->getNombre() . '</span><br>';
         $ofermsj .= '<span class="spanmsj"> Empresa: ' . $oferta->getEmpresa() . '</span><br>';
         $ofermsj .= '<span class="spanmsj"> DNI/CUIT: ' . $oferta->getDnicuit() . '</span><br>';
-        $ofermsj .= '<span class="spanmsj"> EMAIL: ' . $oferta->getEmail() . '</span><br>';
-        $ofermsj .= '<span class="spanmsj"> Telefono: ' . $oferta->getTelefono() . '</span><br><br><br>';
+        $ofermsj .= '<span class="spanmsj"> Email: ' . $oferta->getEmail() . '</span><br>';
+        $ofermsj .= '<span class="spanmsj"> Tel&eacute;fono: ' . $oferta->getTelefono() . '</span><br><br><br>';
         $ofermsj .= '<span class="spanmsj"><strong> Ofertado: ' . $oferta->getOfertado() . '</strong></span><br>';
         $ofermsj .= '<span class="spanmsj"> Lote: ' . $oferta->getLote()->getNombre() . '</span><br>';
         $ofermsj .= '<span class="spanmsj"> Toro: ' . $oferta->getToro()->getNombre() . '</span><br><br><br>';
