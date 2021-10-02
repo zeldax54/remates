@@ -307,7 +307,7 @@ class GenericController extends AbstractController
             $this->sendMail('Info Oferta', $adminmail, $from, $html, $mailer);
 
             $result = array(
-                'msj' => 'Oferta enviada con exito! Recibir&aacute; un email de confirmación.',
+                'msj' => 'Oferta enviada con éxito! Recibir&aacute; un email de confirmación.',
                 'newValue' => $oferta + $lotebd->getIncrementominimo(),
                 'st' => 'ET' //exito
             );
@@ -388,7 +388,7 @@ class GenericController extends AbstractController
         $image3 = $request->getUriForPath('/uploads/genericsimages/image-3.png');
         $image4 = $request->getUriForPath('/uploads/genericsimages/image-4.png');
         $image5 = $request->getUriForPath('/uploads/genericsimages/image-5.png');
-        $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido <span style="font-weight:bold;color:green">aceptada</span>!:</span><br>';
+        $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido <span style="font-weight:bold;color:green">aceptada</span>!</span><br>';
         $ofertaHtml = $this->GethtmlOder($ofer);
         $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
             'mensaje' => $cabeceramsjcliente . $ofertaHtml,
@@ -414,8 +414,8 @@ class GenericController extends AbstractController
 
         if (count($lastOfer) > 1) {
             $prevOfer = $lastOfer[1];
-            $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido <span style="font-weight:bold;color:red">superada</span> :<br>' .
-                'Toro:' . $ofer->getToro()->getNombre() . '<br> Lote:' . $ofer->getLote()->getNombre() . '<br> Nueva Oferta:' .
+            $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido <span style="font-weight:bold;color:red">superada</span><br>' .
+                'Toro: ' . $ofer->getToro()->getNombre() . '<br> Lote: ' . $ofer->getLote()->getNombre() . '<br> Nueva Oferta: ' .
                 $ofer->getOfertado() . '</span><br>';
             $newofertaUrl = $this->generateUrl(
                 'lote_detail',
