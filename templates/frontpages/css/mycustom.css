@@ -129,3 +129,10 @@ video-responsive {
     bottom: 173px;
     left: 32px;
  }
+
+ .sf-toolbarreset{
+   display:none !important;
+ }
+ .sf-minitoolbar{
+  display:none !important;
+ }

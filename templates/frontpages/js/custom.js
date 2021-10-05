@@ -103,8 +103,15 @@
         selectpicker 
 	 ===================================================*/
 		$('.selectpicker').selectpicker();
-	
-	
+
+$('.dropdown-menu').find('li').click(function(){
+
+
+	$('.bootstrap-select').removeClass('open');
+
+
+
+});
 	
 	
 	
