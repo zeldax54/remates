@@ -39,6 +39,7 @@
 									{% endfor %}
 									{% endfor %}
 									{% for t in lote.toros %}
+									{% if t.videos is not null %}
 									{% for v in t.videos|split(';') %}
 									<div>
 										<iframe width="1080" height="400" src="https://www.youtube.com/embed/{{v}}"
@@ -47,6 +48,7 @@
 											allowfullscreen></iframe>
 									</div>
 									{% endfor %}
+									{% endif %}
 									{% endfor %}
 								</div>
 							</div>
