@@ -293,7 +293,7 @@ class GenericController extends AbstractController
 
             $cabeceramsjadmin = '<span class="spanmsj"> Oferta realizada:</span><br>';
             $footermsjadmin = '<span class="spanmsj"> <a href="' . $urlaccept . '"> <span>Aceptar Oferta</span> </a> <br><br><br> <a href="' . $urldenied . '"><span>Rechazar Oferta</span></a></span>';
-
+            $ofermsj.= $this->GethtmlOderforAdmin($ofertaNueva);
             $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
                 'mensaje' => $cabeceramsjadmin . $ofermsj . $footermsjadmin,
                 'nombre' => 'Admin',
@@ -414,9 +414,9 @@ class GenericController extends AbstractController
 
         if (count($lastOfer) > 1) {
             $prevOfer = $lastOfer[1];
-            $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido <span style="font-weight:bold;color:red">superada</span><br>' .
+            $cabeceramsjcliente = '<span class="spanmsj">Su oferta ha sido <span style="font-weight:bold;color:red">superada.</span><br>' .
                 'Toro: ' . $ofer->getToro()->getNombre() . '<br> Lote: ' . $ofer->getLote()->getNombre() . '<br> Nueva Oferta: ' .
-                $ofer->getOfertado() . '</span><br>';
+                number_format( $ofer->getOfertado(),0,',','.') . '</span><br>';
             $newofertaUrl = $this->generateUrl(
                 'lote_detail',
                 array(
@@ -424,7 +424,7 @@ class GenericController extends AbstractController
                 ),
                 UrlGeneratorInterface::ABSOLUTE_URL
             );
-            $newoferta = '<br><span style="font-weight:bold;color:#FF7F50;font-size:20px">Click <a href="' . $newofertaUrl . '"> aqui</a> para hacer una nueva oferta<a>';
+            $newoferta = '<br><span style="font-weight:bold;color:#FF7F50;font-size:20px">Click <a href="' . $newofertaUrl . '"> aqu&iacute;</a> para hacer una nueva oferta<a>';
             $html =  $twig->render('frontpages/emailtemplate.html.twig', array(
                 'mensaje' => $cabeceramsjcliente . $newoferta,
                 'nombre' => $prevOfer->getNombre(),
@@ -493,4 +493,20 @@ class GenericController extends AbstractController
         $ofermsj .= '<span class="spanmsj"> Toro: ' . $oferta->getToro()->getNombre() . '</span><br><br><br>';
         return $ofermsj;
     }
+     private function GethtmlOderforAdmin($oferta)
+     {
+        $ofermsj  = '<br>';
+
+        $ofermsj .= '<span class="spanmsj"> Evento: ';       
+        if($oferta->getLote()->getCabana() != null)
+           $ofermsj .=  $oferta->getLote()->getCabana()->getNombre();
+        $ofermsj .= '</span><br>';
+       
+        $ofermsj .= '<span class="spanmsj"> Cabaña: ';
+        if($oferta->getLote()->getCabanaentity() != null)
+          $ofermsj .=  $oferta->getLote()->getCabanaentity()->getNombre();
+        
+        $ofermsj .= '</span><br><br><br>';    
+        return $ofermsj;
+     }
 }

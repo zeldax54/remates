@@ -26,9 +26,9 @@
 						<div class="page-preview">
 							<div class="preview">
 								<div class="your-class">
-									{% for g in lote.gallery %}
+									{# {% for g in lote.gallery %}
 									<div><img src="{{ asset('uploads/Lote/gallery/' ~ g ) }}" alt="#"></div>
-									{% endfor %}
+									{% endfor %}  #}
 									{% for t in lote.toros %}
 									{% for g in t.gallery %}
 									<div><img src="{{ asset('uploads/Toro/gallery/' ~ g ) }}" alt="#">
@@ -80,9 +80,13 @@
 									<strong class="lotendic">Raza:</strong>
 									{{lote.raza.nombre}}</p>
 								<p>
-									<strong class="lotendic">Cabaña:</strong>
-									{{lote.cabana.nombre}}</p><br>
-								<p>
+									<strong class="lotendic">Evento:</strong>
+									{{lote.cabana.nombre}}
+							
+									<p>
+										<strong class="lotendic">Cabaña:</strong>
+										{{lote.cabanaentity ? lote.cabanaentity.nombre : '-'}}</p><br>
+									<p>
 									<strong class="lotendic">Observaciones:</strong></p>
 								{% for toro in lote.toros %}
 								<strong>{{toro.nombre}}</strong>
