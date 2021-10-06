@@ -1,5 +1,5 @@
 
-   function InitializaGrid(containerid,entityName,campos,parentEntity)
+   function InitializaGrid(containerid,entityName,campos,parentEntity,grandparentEntity=null)
    {
          
       var grid = $("#"+containerid).bootgrid({
@@ -9,7 +9,8 @@
             return {
                 entityName: entityName,
                 columnsName:campos,
-                parentEntity:parentEntity
+                parentEntity:parentEntity,
+                grandparentEntity:grandparentEntity
     
             };
         },
@@ -47,6 +48,10 @@
             "cabanaentity": function(column, row)
             {            
                return row.cabanaentity == null?"Sin Cabaña":row.cabanaentity.nombre;             
+            },
+            "lotecabanaentity": function(column, row)
+            {            
+               return row.lote.cabanaentity == null?"Sin Cabaña":row.lote.cabanaentity.nombre;             
             },
             "status": function(column, row)
             {

@@ -98,8 +98,10 @@ class GenericController extends AbstractController
         $rowCount = $request->request->get('rowCount');
         $sort = $request->request->get('sort');
         $parentEntity = $request->request->get('parentEntity');
+        $grandparentEntity = $request->request->get('grandparentEntity');
+
         $offset = 0;
-        $query = $this->filtrar($entityName, $searchPhrase, $columnsName, $sort, $parentEntity);
+        $query = $this->filtrar($entityName, $searchPhrase, $columnsName, $sort, $parentEntity,$grandparentEntity);
         $paginator = new Paginator($query, $fetchJoinCollection = true);
         $total = $paginator->count();
 
@@ -124,7 +126,7 @@ class GenericController extends AbstractController
         return new JsonResponse($result);
     }
 
-    private function filtrar($entityName, $searchPhrase, $columnNames, $sort, $parentEntity)
+    private function filtrar($entityName, $searchPhrase, $columnNames, $sort, $parentEntity,$grandparent)
     {
         $qb = new QueryBuilder($this->getDoctrine()->getManager());
 
@@ -132,6 +134,13 @@ class GenericController extends AbstractController
             $qb->select("E", "P")
                 ->from("App:" . $entityName, "E")
                 ->leftJoin("E." . $parentEntity, "P");
+                if($grandparent!=null)
+                {
+                    $qb->leftJoin("P." . $grandparent, "G");
+                    $qb->addSelect("G");
+                }
+                  
+                   
         } else {
             $qb
                 ->select("E")
