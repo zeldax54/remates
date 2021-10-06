@@ -240,7 +240,7 @@ header {
 	padding: 0px;
 }
 header .navbar-default .navbar-header {
-	border-bottom: 1px solid #e8e8e8;
+  /*	border-bottom: 1px solid #e8e8e8;*/
 }
 .login-signup {
 	padding: 5px 0px;

@@ -107,6 +107,11 @@ video-responsive {
     width: 61% !important;
     margin-left: 76px !important;
   }
+  #logocontainer{
+    height: 121px !important;
+  
+  }
+  
 }
 @media (min-width:480px)  { 
 
@@ -114,7 +119,16 @@ video-responsive {
         width: 43% !important;
         margin-left: 205px !important;
       }
+      #logocontainer{
+        height: 121px !important;
+      
+      }
+     
  }
+ #iframevideo{
+  width: 100% !important;
+  height:400px !important;
+}
  #top-menu{
      display: none;
  }
