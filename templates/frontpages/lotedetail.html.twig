@@ -166,7 +166,7 @@
 			<div class="col-md-4 col-sm-12">
 				<div class="price-box-right">
 					{% if preoferActive == false or preoferActive is null %}
-					<p>Las preofertas estan deshabilitadas para este Lote</p>
+					<p>Las preofertas aún no comenzaron o ya finalizaron para este lote!</p>
 					{% else %}
 					<h4>PREOFERTA</h4>
 					<form id="oferform" class="get-form">
@@ -188,7 +188,7 @@
 						<input class="ofertaform" type="number" required id="ofertaId" name="oferta"
 							placeholder="Ingrese su preoferta">
 						<h5 style="color:red;" id="messageofer"></h5>
-						<h5>Las pre-ofertas estan sujetas a aprobación</h5>
+						<h5>Las pre-ofertas están sujetas a aprobación</h5>
 					</form>
 					<button id="sendoferbutton" class="btn btn-success" type="submit" form="oferform"
 						value="Submit">Hacer Pre-Oferta</button>
