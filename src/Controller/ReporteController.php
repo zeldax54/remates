@@ -54,12 +54,10 @@ class ReporteController extends AbstractController
             ->leftJoin("L.cabana","C")
             ->where("O.fecha >='" . $fechaInicio . "'")
             ->andWhere("O.fecha <='" . $fechafin . "'")
-            ->andWhere("C.id ='" . $cabana->getId(). "'");      
+            ->andWhere("C.id ='" . $cabana->getId(). "'");     
                
-            if($agrupar == true)            
-                $qb->orderBy('T.id') ->addOrderBy('O.fecha', 'DESC');                          
-            else            
-                $qb->orderBy('O.id');
+                     
+               $qb->orderBy('T.nombre') ->addOrderBy('O.fecha', 'DESC'); 
             
                 
 
