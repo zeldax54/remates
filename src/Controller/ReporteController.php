@@ -84,12 +84,16 @@ class ReporteController extends AbstractController
                  ->setCellValue('H1', 'Estado')
                  ->setCellValue('I1', 'Fecha')
                  ->setCellValue('J1', 'Cantidad Ofertada');
+               
+                 
                  $this->Colorear( $objPHPExcel,array('A','B','C','D','E','F','G','H','I','J'),1);
 
                  $inneriter = 2;
-                 foreach($ofertas as $o){      
+                 $loopiter = 0 ;
+                 foreach($ofertas as $o)
+                 {      
              
-                    $status ='';
+                  $status ='';
                   switch ($o['status']) {
                       case 'S':
                         $status = 'Superada';
@@ -113,23 +117,30 @@ class ReporteController extends AbstractController
                   $objWorkSheet ->setCellValue('G'.$inneriter, $o['telefono']);
                   $objWorkSheet ->setCellValue('H'.$inneriter, $status);
                   $objWorkSheet ->setCellValue('I'.$inneriter, $o['fecha']->format('d-m-Y H:i:s'));
-                  $objWorkSheet ->setCellValue('J'.$inneriter, $o['ofertado']);
+                  $objWorkSheet ->setCellValue('J'.$inneriter, $o['ofertado']);                  
                 
-                  if($agrupar == true && $inneriter > 2 && $o['toro']['id']!= $ofertas[$inneriter-2-1]['toro']['id'] )
+                  if( isset($ofertas[$loopiter+1]) && $agrupar == true  && $o['toro']['id'] !== $ofertas[$loopiter+1]['toro']['id'])
                   {
-                    $objWorkSheet ->setCellValue('A'.$inneriter, '');
-                    $objWorkSheet ->setCellValue('B'.$inneriter, '');
-                    $objWorkSheet ->setCellValue('C'.$inneriter, '');
-                    $objWorkSheet ->setCellValue('D'.$inneriter, '');
-                    $objWorkSheet ->setCellValue('E'.$inneriter, '');
-                    $objWorkSheet ->setCellValue('F'.$inneriter, '');
-                    $objWorkSheet ->setCellValue('G'.$inneriter, '');
-                    $objWorkSheet ->setCellValue('H'.$inneriter, '');
-                    $objWorkSheet ->setCellValue('I'.$inneriter, '');
-                    $objWorkSheet ->setCellValue('J'.$inneriter, '');
+
+                    
+                    $valor = $inneriter + 1;
+    
+                  
+                    $objWorkSheet ->setCellValue('A'.$valor, '');
+                    $objWorkSheet ->setCellValue('B'.$valor, '');
+                    $objWorkSheet ->setCellValue('C'.$valor, '');
+                    $objWorkSheet ->setCellValue('D'.$valor, '');
+                    $objWorkSheet ->setCellValue('E'.$valor, '');
+                    $objWorkSheet ->setCellValue('F'.$valor, '');
+                    $objWorkSheet ->setCellValue('G'.$valor, '');
+                    $objWorkSheet ->setCellValue('H'.$valor, '');
+                    $objWorkSheet ->setCellValue('I'.$valor, '');
+                    $objWorkSheet ->setCellValue('J'.$valor, '');
+                    $inneriter++;
                   }
                  
                   $inneriter++;
+                  $loopiter++;
 
                  }          
                 
